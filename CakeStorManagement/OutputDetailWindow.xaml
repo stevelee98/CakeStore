@@ -38,13 +38,15 @@
             <materialDesign:Card Grid.Row="0" Margin="5">
                 <WrapPanel Margin=" 0 0 0 10">
                     <TextBox materialDesign:HintAssist.Hint="ID đơn hàng" Margin="5 5 15 5" 
-                             Text="{Binding IdOutput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            Focusable="False" Text="{Binding IdOutput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="Người tạo" Margin="5 5 15 5" 
-                             Text="{Binding UserNameOutput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            Focusable="False" Text="{Binding UserNameOutput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="Ngày xuất" Margin="5 5 15 5" 
-                             Text="{Binding DateOutput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            Focusable="False" Text="{Binding DateOutput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="Số lượng hàng xuất" Margin="5 5 15 5" 
-                             Text="{Binding TotalCount,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            Focusable="False" Text="{Binding TotalCount,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox materialDesign:HintAssist.Hint="Phương thức thanh toán" Margin="5 5 15 5" 
+                            Focusable="False" Text="{Binding PayMentType,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </WrapPanel>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
@@ -56,7 +58,7 @@
                                 <GridViewColumn Header="Tên hàng" DisplayMemberBinding="{Binding Cake.DisplayName}"></GridViewColumn>
                                 <GridViewColumn Header="Ngày xuất" DisplayMemberBinding="{Binding Output.DateOutput}"></GridViewColumn>
                                 <GridViewColumn Header="Số lượng" DisplayMemberBinding="{Binding Count}"></GridViewColumn>
-                                <GridViewColumn Header="Giá xuất" DisplayMemberBinding="{Binding InputInfor.OutputPrice}"></GridViewColumn>
+                                <GridViewColumn Header="Giá xuất" DisplayMemberBinding="{Binding OutputPrice}"></GridViewColumn>
                                 <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding Customer.DisplayName}"></GridViewColumn>
                                 <GridViewColumn Header="Trạng thái"  DisplayMemberBinding="{Binding Status}"></GridViewColumn>
                             </GridView>

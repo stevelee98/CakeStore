@@ -40,19 +40,14 @@
             </Grid.RowDefinitions>
             <materialDesign:Card Grid.Row="0" Margin="5">
                 <WrapPanel Margin=" 0 0 0 10">
-                    <TextBox materialDesign:HintAssist.Hint="Mã nhân viên" Margin="5 5 15 5" 
-                             Text="{Binding Id,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-
                     <TextBox materialDesign:HintAssist.Hint="Tên  đăng nhập" Margin="5 5 15 5" 
                              Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <ComboBox Margin="5 5 15 5" materialDesign:HintAssist.Hint="Quyền" IsEditable="True"
                               DisplayMemberPath="DisplayName"
                               ItemsSource="{Binding UserRoleList}" SelectedItem="{Binding SelectedUserRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
-                    <TextBox materialDesign:HintAssist.Hint="Tên hiển thị" Margin="5 5 15 5" 
-                             Text="{Binding DisplayName,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="Mật khẩu" Margin="5 5 15 5" 
-                             Text="{Binding SelectedItem.PassWords}"
+                             Text="{Binding PassWord,UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
 
                 </WrapPanel>
@@ -81,7 +76,6 @@
                             <GridView>
                                 <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
                                 <GridViewColumn Header="Tên đăng nhập" DisplayMemberBinding="{Binding UserName}"></GridViewColumn>
-                                <GridViewColumn Header="Tên hiển thị" DisplayMemberBinding="{Binding DisplayName}"></GridViewColumn>
                                 <GridViewColumn Header="Chức vụ" DisplayMemberBinding="{Binding UserRole.DisplayName}"></GridViewColumn>
                             </GridView>
                         </ListView.View>

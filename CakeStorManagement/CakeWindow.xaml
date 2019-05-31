@@ -7,7 +7,7 @@
 
         
         mc:Ignorable="d"
-              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -42,17 +42,17 @@
                 <WrapPanel Margin=" 0 0 0 10">
                     <TextBox materialDesign:HintAssist.Hint="Tên" Margin="5 5 15 5" 
                              Text="{Binding DisplayName,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <ComboBox Margin="5 5 15 5" materialDesign:HintAssist.Hint="Đơn vị đo" IsEditable="True"
+
+                    <ComboBox Margin="5 5 15 5" materialDesign:HintAssist.Hint="Loại bánh" IsEditable="True"
                               DisplayMemberPath="DisplayName"
-                              ItemsSource="{Binding UnitList}" SelectedItem="{Binding SelectedUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding CakeTypeList}" SelectedItem="{Binding SelectedCakeType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                    
                     <ComboBox Margin="5 5 15 5" materialDesign:HintAssist.Hint="Nhà cung cấp" IsEditable="True"
                               DisplayMemberPath="DisplayName"
                               ItemsSource="{Binding SuplierList}" SelectedItem="{Binding SelectedSuplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
 
-                    <TextBox materialDesign:HintAssist.Hint="QRCode" Margin="5 5 15 5" 
-                             Text="{Binding QRCode,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="BarCode" Margin="5 5 15 5" 
                              Text="{Binding BarCode,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </WrapPanel>
@@ -70,11 +70,6 @@
                             Content="Xóa" Background="OrangeRed"
                             Command="{Binding DeleteCommand}" />
                     <TextBox Width="299"></TextBox>
-                    <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Width="150"  Margin="5"
-                            Content="Quản lí đơn vị đo"
-                            Command="{Binding UnitCommand}"
-                            CommandParameter="{Binding ElementName=cakewindow}"
-                            />
                 </WrapPanel>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="2" Margin="5" VerticalAlignment="Stretch">
@@ -84,9 +79,8 @@
                         <GridView>
                             <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
                             <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding DisplayName}"></GridViewColumn>
-                            <GridViewColumn Header="Đơn vị đo" DisplayMemberBinding="{Binding Unit.DisplayName}"></GridViewColumn>
+                            <GridViewColumn Header="Loại bánh" DisplayMemberBinding="{Binding CakeType.DisplayName}"></GridViewColumn>
                             <GridViewColumn Header="Nhà cung cấp" DisplayMemberBinding="{Binding Suplier.DisplayName}"></GridViewColumn>
-                            <GridViewColumn Header="QRCode" DisplayMemberBinding="{Binding QRCode}"></GridViewColumn>
                             <GridViewColumn Header="BarCode" DisplayMemberBinding="{Binding BarCode}"></GridViewColumn>
                         </GridView>
                     </ListView.View>

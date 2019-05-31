@@ -15,14 +15,16 @@ namespace CakeStorManagement.Model
     public partial class InputInfor
     {
         public int Id { get; set; }
-        public string IdCake { get; set; }
         public int IdInput { get; set; }
-        public Nullable<int> Count { get; set; }
-        public Nullable<double> InputPrice { get; set; }
-        public Nullable<double> OutputPrice { get; set; }
+        public string IdCake { get; set; }
+        public int IdSuplier { get; set; }
+        public int Count { get; set; }
+        public double InputPrice { get; set; }
         public string Status { get; set; }
+        public bool isDelete { get; set; }
     
         public virtual Cake Cake { get; set; }
         public virtual Input Input { get; set; }
+        public virtual Suplier Suplier { get; set; }
     }
 }

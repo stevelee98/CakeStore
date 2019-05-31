@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,17 +27,21 @@ namespace CakeStorManagement.ViewModel
         private string _DisplayName;
         public string DisplayName { get => _DisplayName; set { _DisplayName = value; OnPropertyChanged(); } }
 
-        private DateTime? _DateInput;
-        public DateTime? DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged(); } }
+        private DateTime _DateInput;
+        public DateTime DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged(); } }
         private int _Count;
         public int Count { get => _Count; set { _Count = value; OnPropertyChanged(); } }
         private double _InputPrice;
         public double InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
-        private double _OutputPrice;
-        public double OutputPrice { get => _OutputPrice; set { _OutputPrice = value; OnPropertyChanged(); } }
+
         private string _Status;
         public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
 
+        private ObservableCollection<Suplier> _Suplier;
+        public ObservableCollection<Suplier> SuplierList { get => _Suplier; set { _Suplier = value; OnPropertyChanged(); } }
+
+        private Suplier _SelectedSuplier;
+        public Suplier SelectedSuplier { get => _SelectedSuplier; set { _SelectedSuplier = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Cake> _Cake;
         public ObservableCollection<Cake> CakeList { get => _Cake; set { _Cake = value; OnPropertyChanged(); } }
@@ -50,10 +55,10 @@ namespace CakeStorManagement.ViewModel
                 _SelectedItem = value; OnPropertyChanged();
                 if (SelectedItem != null)
                 {
-                    SelectedCake = SelectedItem.Cake; 
+                    SelectedCake = SelectedItem.Cake;
+          
                     Count = SelectedItem.Count;
                     InputPrice = SelectedItem.InputPrice;
-                    OutputPrice = SelectedItem.OutputPrice;
                     Status = SelectedItem.Status;
                 }
             }
@@ -64,26 +69,28 @@ namespace CakeStorManagement.ViewModel
         public ICommand EditCommand { get; set; }
         public ICommand FinishCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand DestroyInputCommand { get; set; }
 
         public InputCakeViewModel()
         {
+               
             UserInput = MainViewModel.User;
             int IdUser = MainViewModel.IdUser;
             DateInput = DateTime.Now;
 
-            Input newInput = new Input() { IdUser = IdUser, DateInput = DateInput };
-            DataProvider.Ins.DB.Inputs.Add(newInput);
-            DataProvider.Ins.DB.SaveChanges();
-            IdInput = newInput.Id;
+            int IdLastInput = DataProvider.Ins.DB.Inputs.Max(x=> x.Id);
 
+            IdInput = IdLastInput + 1;
+            
             List = new ObservableCollection<InputInfor>();
-            CakeList = new ObservableCollection<Cake>(DataProvider.Ins.DB.Cakes);
+            CakeList = new ObservableCollection<Cake>(DataProvider.Ins.DB.Cakes.Where(x =>x.isDelete == false));
+            SuplierList = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Supliers.Where(x => x.isDelete == false));
 
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (_SelectedCake == null )
+                if (_SelectedCake == null || Count <= 0 || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
                     return false;
-          
+
                 return true;
 
             }, (p) =>
@@ -92,49 +99,59 @@ namespace CakeStorManagement.ViewModel
                 var inputInforTemp = new InputInfor()
                 {
                     Cake = SelectedCake,
+                    Suplier = SelectedCake.Suplier,
+                    IdSuplier = SelectedCake.IdSuplier,
                     IdCake = SelectedCake.Id,
                     IdInput = IdInput,
                     InputPrice = InputPrice,
-                    OutputPrice = OutputPrice,
                     Status = Status,
-                    Count = Count
+                    Count = Count,
+                    isDelete = false
                 };                                
                 List.Add(inputInforTemp);
             });
             FinishCommand = new RelayCommand<Window>((p) =>
             {
+                if (List.Count == 0) return false;
                 return true;
             }, (p) =>
             {
-    
+                Input newInput = new Input() { Id = IdInput, DateInput = DateInput, IdUser = IdUser };
+                DataProvider.Ins.DB.Inputs.Add(newInput);
+                DataProvider.Ins.DB.SaveChanges();
+
                 foreach (var item in List)
                 {
                     DataProvider.Ins.DB.InputInfors.Add(item);
                 }
-                DataProvider.Ins.DB.SaveChanges();
+                DataProvider.Ins.DB.SaveChanges();               
                 p.Close();
             });
             EditCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedItem == null || SelectedCake == null)
+           
+                if (SelectedItem == null || SelectedCake == null || Count <= 0 || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
                     return false;
+
                 return true;
 
             }, (p) =>
             {
                 for (int i = 0; i < List.Count(); i++)
                 {
-                    if (List[i].Cake == SelectedItem.Cake && List[i].InputPrice == SelectedItem.InputPrice && List[i].OutputPrice == SelectedItem.OutputPrice && List[i].Status == SelectedItem.Status && List[i].Count == SelectedItem.Count )
+                    if (List[i].Cake == SelectedItem.Cake && List[i].InputPrice == SelectedItem.InputPrice && List[i].Suplier == SelectedItem.Suplier && List[i].Status == SelectedItem.Status && List[i].Count == SelectedItem.Count )
                     {
                         List[i] = new InputInfor()
                         {
                             Cake = SelectedCake,
                             IdCake = SelectedCake.Id,
-                            IdInput = newInput.Id,
+                            IdInput = IdInput,
                             InputPrice = InputPrice,
-                            OutputPrice = OutputPrice,
+                            Suplier = SelectedCake.Suplier,
+                            IdSuplier = SelectedCake.IdSuplier,
                             Status = Status,
-                            Count = Count
+                            Count = Count,
+                            isDelete = false
                         };
                         break;
                     }
@@ -150,7 +167,7 @@ namespace CakeStorManagement.ViewModel
             {
                 for (int i = 0; i < List.Count(); i++)
                 {
-                    if (List[i].Cake == SelectedItem.Cake && List[i].InputPrice == SelectedItem.InputPrice && List[i].OutputPrice == SelectedItem.OutputPrice && List[i].Status == SelectedItem.Status && List[i].Count == SelectedItem.Count)
+                    if (List[i].Cake == SelectedItem.Cake && List[i].InputPrice == SelectedItem.InputPrice && List[i].Suplier == SelectedItem.Suplier && List[i].Status == SelectedItem.Status && List[i].Count == SelectedItem.Count)
                     {
                         List.Remove(List[i]);
                         break;
@@ -158,6 +175,22 @@ namespace CakeStorManagement.ViewModel
                 }
             
             });
+
+            DestroyInputCommand = new RelayCommand<Window>((p) =>
+            {
+                return true;
+            },(p) =>
+            {
+               
+                p.Close();
+            });
+            }
+        public void Dispose()
+        {
+            // Cleanup code
+            // SettingsRepository.Save();
+            // WebServiceConnection.Close();
+            // etc.
         }
     }
 

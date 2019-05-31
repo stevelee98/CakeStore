@@ -23,14 +23,13 @@ namespace CakeStorManagement.Model
     
         public string Id { get; set; }
         public string DisplayName { get; set; }
-        public int CakeType { get; set; }
-        public int IdUnit { get; set; }
+        public int IdCakeType { get; set; }
         public int IdSuplier { get; set; }
         public string BarCode { get; set; }
+        public bool isDelete { get; set; }
     
-        public virtual CakeType CakeType1 { get; set; }
+        public virtual CakeType CakeType { get; set; }
         public virtual Suplier Suplier { get; set; }
-        public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InputInfor> InputInfors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

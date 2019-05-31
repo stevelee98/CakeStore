@@ -255,24 +255,17 @@
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{ Binding ElementName=BorderG1 }"/>
                                     </Grid.OpacityMask>
-                                    <Border x:Name="BorderG4" CornerRadius="5" Background="White"/>
+                                    <Border x:Name="BorderG3" CornerRadius="5" Background="White"/>
                                     <!--Chart-->
                                 </Grid>
                                 <Grid Margin="50 20 50 150">
                                     <Grid.OpacityMask>
-                                        <VisualBrush Visual="{ Binding ElementName=BorderG2 }"/>
+                                        <VisualBrush Visual="{ Binding ElementName=BorderG5 }"/>
                                     </Grid.OpacityMask>
                                     <Border x:Name="BorderG5" CornerRadius="15" Background="#FFFF0097" Margin="0,0,0,-106"/>
 
                                     <MetroChart:ClusteredColumnChart ChartTitle="Doanh thu" ChartSubTitle="Doanh thu từng sản phẩm" Margin="0,0,0,-54" >
-                                        <MetroChart:ClusteredColumnChart.RenderTransform>
-                                            <TransformGroup>
-                                                <ScaleTransform/>
-                                                <SkewTransform AngleX="-0.641"/>
-                                                <RotateTransform/>
-                                                <TranslateTransform X="-2.239"/>
-                                            </TransformGroup>
-                                        </MetroChart:ClusteredColumnChart.RenderTransform>
+
                                         <MetroChart:ClusteredColumnChart.Series>
                                             <MetroChart:ChartSeries 
                                         DisplayMember="Title"

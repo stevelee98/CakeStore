@@ -14,10 +14,10 @@ namespace CakeStorManagement.ViewModel
 
         private int _Id;
         public int IdOutput { get => _Id; set { _Id = value; OnPropertyChanged(); } }
-        private int _UserNameOutput;
-        public int UserNameOutput { get => _UserNameOutput; set { _UserNameOutput = value; OnPropertyChanged(); } }
-        private DateTime? _DateOutput;
-        public DateTime? DateOutput { get => _DateOutput; set { _DateOutput = value; OnPropertyChanged(); } }
+        private string _UserNameOutput;
+        public string UserNameOutput { get => _UserNameOutput; set { _UserNameOutput = value; OnPropertyChanged(); } }
+        private DateTime _DateOutput;
+        public DateTime DateOutput { get => _DateOutput; set { _DateOutput = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Output> _List;
         public ObservableCollection<Output> List { get => _List; set { _List = value; OnPropertyChanged(); } }
@@ -38,7 +38,7 @@ namespace CakeStorManagement.ViewModel
                     outputDetail.DataContext = new OutputDetailViewModel();
                     ((OutputDetailViewModel)outputDetail.DataContext).IdOutput = SelectedItem.Id;
                     ((OutputDetailViewModel)outputDetail.DataContext).DateOutput = SelectedItem.DateOutput;
-                    ((OutputDetailViewModel)outputDetail.DataContext).UserNameOutput = SelectedItem.User.DisplayName;
+                    ((OutputDetailViewModel)outputDetail.DataContext).UserNameOutput = SelectedItem.User.UserName;
                     outputDetail.ShowDialog();
                 }
                 OnPropertyChanged();

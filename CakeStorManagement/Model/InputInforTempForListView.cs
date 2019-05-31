@@ -10,8 +10,8 @@ namespace CakeStorManagement.Model
     public class InputInforTempForListView
     {
 
-       // public string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
-        public InputInfor InforTemp { get ; set; }        
+        public InputInfor InforTemp { get; set; }
     }
 }

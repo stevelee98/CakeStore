@@ -18,6 +18,7 @@ namespace CakeStorManagement.Model
         public Suplier()
         {
             this.Cakes = new HashSet<Cake>();
+            this.InputInfors = new HashSet<InputInfor>();
         }
     
         public int Id { get; set; }
@@ -25,10 +26,12 @@ namespace CakeStorManagement.Model
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public string MoreInfor { get; set; }
-        public Nullable<System.DateTime> ContractDate { get; set; }
+        public System.DateTime ContractDate { get; set; }
+        public bool isDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cake> Cakes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InputInfor> InputInfors { get; set; }
     }
 }

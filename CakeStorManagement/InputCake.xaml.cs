@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CakeStorManagement.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,17 @@ namespace CakeStorManagement
     {
         public InputCake()
         {
+            //DataContext = new InputCakeViewModel();
             InitializeComponent();
+            //Dispatcher.ShutdownStarted += OnDispatcherShutDownStarted;
+        }
+        private void OnDispatcherShutDownStarted(object sender, EventArgs e)
+        {
+            var disposable = DataContext as IDisposable;
+            if (!ReferenceEquals(null, disposable))
+            {
+                disposable.Dispose();
+            }
         }
     }
 }

@@ -22,10 +22,10 @@ namespace CakeStorManagement.Model
         }
     
         public int Id { get; set; }
-        public string DisplayName { get; set; }
         public string UserName { get; set; }
         public string PassWords { get; set; }
-        public int IdRole { get; set; }
+        public int IdUserRole { get; set; }
+        public bool isDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Input> Inputs { get; set; }

@@ -31,23 +31,17 @@ namespace CakeStorManagement.ViewModel
         private string _DisplayName;
         public string DisplayName { get => _DisplayName; set { _DisplayName = value; OnPropertyChanged(); } }
         
-        private DateTime? _DateOutput;
-        public DateTime? DateOutput { get => _DateOutput; set { _DateOutput = value; OnPropertyChanged(); } }
+        private DateTime _DateOutput;
+        public DateTime DateOutput { get => _DateOutput; set { _DateOutput = value; OnPropertyChanged(); } }
 
         private int _Count;
         public int Count { get => _Count; set { _Count = value; OnPropertyChanged(); } }
 
-        //private double _InputPrice;
-        //public double InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
+        private double _PriceInput;
+        public double PriceInput { get => _PriceInput; set { _PriceInput = value; OnPropertyChanged(); } }
 
-        private double _OutputPrice;
-        public double OutputPrice { get => _OutputPrice; set { _OutputPrice = value; OnPropertyChanged(); } }
-
-        private ObservableCollection<double> _OutputPriceList;
-        public ObservableCollection<double> OutputPriceList { get => _OutputPriceList; set { _OutputPriceList = value; OnPropertyChanged(); } }
-
-        private double _SelectedPrice;
-        public double SelectedPrice { get => _SelectedPrice; set { _SelectedPrice = value; OnPropertyChanged(); } }
+        private double _PriceOutput;
+        public double PriceOutput { get => _PriceOutput; set { _PriceOutput = value; OnPropertyChanged(); } }
 
         private string _Status;
         public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
@@ -66,9 +60,19 @@ namespace CakeStorManagement.ViewModel
                 _SelectedCake = value; OnPropertyChanged();
                 if (SelectedCake != null)
                 {
-                    OutputPriceList = new ObservableCollection<double>();
-                    var tempOutputPriceList = new ObservableCollection<InputInfor>(DataProvider.Ins.DB.InputInfors.Where(x => x.IdCake == SelectedCake.Id));
-                    foreach (var item in tempOutputPriceList) { double price = item.OutputPrice; OutputPriceList.Add(price); }
+                    var inputInfor = DataProvider.Ins.DB.InputInfors.Where(x => x.IdCake == SelectedCake.Id).Select(x => x.InputPrice);
+
+                    double priceMax = 0;
+
+                    foreach(var item in inputInfor)
+                    {
+                        if(item >= priceMax)
+                        {
+                            priceMax = item;
+                        }
+                    }
+
+                    PriceInput = priceMax;
 
                     InventoryList = LoadInvertoryList();
      
@@ -101,10 +105,9 @@ namespace CakeStorManagement.ViewModel
                 if (SelectedItem != null)
                 {
                     SelectedCake = SelectedItem.Cake;
+                    SelectedCustomer = SelectedItem.Customer;
                     Count = SelectedItem.Count;
-                    SelectedPrice = SelectedItem.OutputPrice;
-                    //OutputPrice = SelectedItem.OutputPrice;
-                    //OutputPrice = SelectedItem.OutputPrice;
+                    PriceOutput = PriceOutput;
                     Status = SelectedItem.Status;
                 }
             }
@@ -115,26 +118,24 @@ namespace CakeStorManagement.ViewModel
         public ICommand EditCommand { get; set; }
         public ICommand FinishCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand DestroyInputCommand { get; set; }
 
         public OutputCakeViewModel()
         {
             UserOutput = MainViewModel.User;
             int IdUser = MainViewModel.IdUser;
             DateOutput = DateTime.Now;
+            int IdLastOutput = DataProvider.Ins.DB.Outputs.Max(x => x.Id);
 
-            Output newOutput = new Output() { IdUser = IdUser, DateOutput = DateOutput };
-            DataProvider.Ins.DB.Outputs.Add(newOutput);
-            DataProvider.Ins.DB.SaveChanges();
-            IdOutput = newOutput.Id;
+            IdOutput = IdLastOutput + 1;
 
             List = new ObservableCollection<OutputInfor>();
             CakeList = new ObservableCollection<Cake>(DataProvider.Ins.DB.Cakes);
             CustomerList = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers);
-            OutputPriceList = new ObservableCollection<double>();
-
+          
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedCake == null || SelectedCustomer == null || Count == 0 || Count > InventoryCake)
+                if (_SelectedCake == null || PriceOutput <= 0 || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
                     return false;
 
                 return true;
@@ -148,18 +149,24 @@ namespace CakeStorManagement.ViewModel
                     IdCake = SelectedCake.Id,
                     IdOutput = IdOutput,
                     Customer = SelectedCustomer,
-                    OutputPrice = SelectedPrice,
+                    OutputPrice = PriceOutput,
                     Status = Status,
-                    Count = Count
+                    Count = Count,
+                    IdPayment = 1,
+                    isDelete = false
                 };
                 List.Add(OutputInforTemp);
             });
             FinishCommand = new RelayCommand<Window>((p) =>
             {
+                if (List.Count == 0) return false;
                 return true;
             }, (p) =>
             {
 
+                Output newOutput = new Output() {Id=IdOutput, IdUser = IdUser, DateOutput = DateOutput };
+                DataProvider.Ins.DB.Outputs.Add(newOutput);
+                DataProvider.Ins.DB.SaveChanges();
                 foreach (var item in List)
                 {
                     DataProvider.Ins.DB.OutputInfors.Add(item);
@@ -169,8 +176,9 @@ namespace CakeStorManagement.ViewModel
             });
             EditCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedItem == null || SelectedCake == null || SelectedCustomer == null || Count > InventoryCake)
+                if (SelectedItem == null || SelectedCake == null || PriceOutput <= 0 || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
                     return false;
+
                 return true;
 
             }, (p) =>
@@ -184,10 +192,12 @@ namespace CakeStorManagement.ViewModel
                             Cake = SelectedCake,
                             IdCake = SelectedCake.Id,
                             IdOutput = IdOutput,
-                            OutputPrice = SelectedPrice,
+                            OutputPrice = PriceOutput,
                             Customer = SelectedCustomer,
                             Status = Status,
-                            Count = Count
+                            Count = Count,
+                            IdPayment = 1,
+                            isDelete = false
                         };
                         break;
                     }
@@ -210,6 +220,15 @@ namespace CakeStorManagement.ViewModel
                     }
                 }
 
+            });
+
+            DestroyInputCommand = new RelayCommand<Window>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                MessageBox.Show("Bạn chắc chắn hủy phiếu nhập này ???");
+                p.Close();
             });
         }
 

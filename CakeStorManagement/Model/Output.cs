@@ -22,7 +22,7 @@ namespace CakeStorManagement.Model
     
         public int Id { get; set; }
         public int IdUser { get; set; }
-        public Nullable<System.DateTime> DateOutput { get; set; }
+        public System.DateTime DateOutput { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

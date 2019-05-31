@@ -46,8 +46,6 @@
                              Text="{Binding Phone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="Email" Margin="5 5 15 5" 
                              Text="{Binding Email,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox materialDesign:HintAssist.Hint="Thông tin thêm" Margin="5 5 15 5" 
-                             Text="{Binding MoreInfor,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <DatePicker VerticalAlignment="Center"  Width="100" materialDesign:HintAssist.Hint="Ngày hợp tác" Margin="5 5 15 5" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
                                   SelectedDateFormat="Long" 
                                 SelectedDate="{Binding ContractDate}"/>
@@ -77,7 +75,6 @@
                                 <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding Address}"></GridViewColumn>
                                 <GridViewColumn Header="Điện thoại" DisplayMemberBinding="{Binding Phone}"></GridViewColumn>
                                 <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"></GridViewColumn>
-                                <GridViewColumn Header="Thông tin thêm" DisplayMemberBinding="{Binding MoreInfor}"></GridViewColumn>
                                 <GridViewColumn Header="Ngày hợp tác" DisplayMemberBinding="{Binding ContractDate, StringFormat='dd/MM/yyyy'}"></GridViewColumn>
 
                             </GridView>

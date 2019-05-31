@@ -12,16 +12,24 @@ namespace CakeStorManagement.ViewModel
 {
     public class CakeViewModel : BaseViewModel
     {
-        public ICommand UnitCommand { get; set; }
 
         private ObservableCollection<Cake> _List;
         public ObservableCollection<Cake> List { get => _List; set { _List = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<Unit> _Unit;
-        public ObservableCollection<Unit> UnitList { get => _Unit; set { _Unit = value; OnPropertyChanged(); } }
-
         private ObservableCollection<Suplier> _Suplier;
         public ObservableCollection<Suplier> SuplierList { get => _Suplier; set { _Suplier = value; OnPropertyChanged(); } }
+
+        private Suplier _SelectedSuplier;
+        public Suplier SelectedSuplier { get => _SelectedSuplier; set { _SelectedSuplier = value; OnPropertyChanged(); } }
+        
+        private Suplier _SuplierDisplayName;
+        public Suplier SuplierDisplayName { get => _SuplierDisplayName; set { _SuplierDisplayName = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<CakeType> _Type;
+        public ObservableCollection<CakeType> CakeTypeList { get => _Type; set { _Type = value; OnPropertyChanged(); } }
+
+        private CakeType _SelectedCakeType;
+        public CakeType SelectedCakeType { get => _SelectedCakeType; set { _SelectedCakeType = value; OnPropertyChanged(); } }
 
         private Cake _SelectedItem;
         public Cake SelectedItem
@@ -35,70 +43,48 @@ namespace CakeStorManagement.ViewModel
                 {
                     DisplayName = SelectedItem.DisplayName;
                     BarCode = SelectedItem.BarCode;
-                    SelectedUnit = SelectedItem.Unit;
+                    SelectedCakeType = SelectedItem.CakeType;
                     SelectedSuplier = SelectedItem.Suplier;
                 }
             }
         }
 
-        private Unit _SelectedUnit;
-        public Unit SelectedUnit { get => _SelectedUnit; set { _SelectedUnit = value; OnPropertyChanged(); } }
-
-        private Suplier _SelectedSuplier;
-        public Suplier SelectedSuplier { get => _SelectedSuplier; set { _SelectedSuplier = value; OnPropertyChanged(); } }
-
-        private Unit _UnitDisplayName;
-        public Unit UnitDisplayName
-        {
-            get => _UnitDisplayName; set
-            {
-                UnitDisplayName = value;
-                OnPropertyChanged();
-
-            }
-        }
-
-        private Suplier _SuplierDisplayName;
-        public Suplier SuplierDisplayName { get => _SuplierDisplayName; set { _SuplierDisplayName = value; OnPropertyChanged(); } }
-
+       
         private string _DisplayName;
         public string DisplayName { get => _DisplayName; set { _DisplayName = value; OnPropertyChanged(); } }
-
-        private string _QRCode;
-        public string QRCode { get => _QRCode; set { _QRCode = value; OnPropertyChanged(); } }
-
-
+        
         private string _BarCode;
         public string BarCode { get => _BarCode; set { _BarCode = value; OnPropertyChanged(); } }
-
-
+        
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        
 
         public CakeViewModel()
         {
-            UnitCommand = new RelayCommand<Window>((p) => {return true; }, p =>
-            {
-                UnitWindow wd = new UnitWindow();
-                if (p != null)
-                {
-                    p.Close();
-                    wd.ShowDialog();
-                }
-               
-            }
-            );
 
+            List = new ObservableCollection<Cake>(DataProvider.Ins.DB.Cakes.Where(x => x.isDelete != true));
 
-            List = new ObservableCollection<Cake>(DataProvider.Ins.DB.Cakes);
-            UnitWindow uw = new UnitWindow();
-            var UnitDataContext = uw.DataContext as UnitViewModel;
-
-            UnitList = new ObservableCollection<Unit>(UnitDataContext.List);
+            CakeTypeList = new ObservableCollection<CakeType>(DataProvider.Ins.DB.CakeTypes);
             SuplierList = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Supliers);
+
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedSuplier == null || SelectedUnit == null)
+                int err = 0;
+                foreach(var item in List)
+                {
+                    if(DisplayName == item.DisplayName)
+                    {
+                        err = 1;
+                    }
+                }
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
+                if (err == 1)
+                {
+                    return false;
+                }
+                if (SelectedSuplier == null || SelectedCakeType == null)
                     return false;
                 return true;
 
@@ -109,9 +95,9 @@ namespace CakeStorManagement.ViewModel
                     DisplayName = DisplayName,
                     BarCode = BarCode,
                     IdSuplier = SelectedSuplier.Id,
-                    IdUnit = SelectedUnit.Id,
+                    IdCakeType = SelectedCakeType.Id,
                     Id = Guid.NewGuid().ToString(),
-                    CakeType = 1
+                    isDelete = false
                 };
 
                 DataProvider.Ins.DB.Cakes.Add(cake);
@@ -122,9 +108,9 @@ namespace CakeStorManagement.ViewModel
 
             EditCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedItem == null || SelectedSuplier == null || SelectedUnit == null)
+                if (SelectedItem == null || SelectedSuplier == null || SelectedCakeType == null)
                     return false;
-
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
                 var displayList = DataProvider.Ins.DB.Cakes.Where(x => x.Id == SelectedItem.Id);
                 if (displayList != null && displayList.Count() != 0)
                     return true;
@@ -137,7 +123,8 @@ namespace CakeStorManagement.ViewModel
                 cake.DisplayName = DisplayName;
                 cake.BarCode = BarCode;
                 cake.IdSuplier = SelectedSuplier.Id;
-                cake.IdUnit = SelectedUnit.Id;
+                cake.IdCakeType = SelectedCakeType.Id;
+                cake.isDelete = false;
                 DataProvider.Ins.DB.SaveChanges();
                 SelectedItem.DisplayName = DisplayName;
                 for (int i = 0; i < List.Count(); i++)
@@ -150,13 +137,40 @@ namespace CakeStorManagement.ViewModel
                             DisplayName = DisplayName,
                             BarCode = BarCode,               
                             IdSuplier = SelectedSuplier.Id,
-                            IdUnit = SelectedUnit.Id,
+                            IdCakeType = SelectedCakeType.Id,
                             Suplier = SelectedSuplier,
-                            Unit = SelectedUnit
+                            CakeType = SelectedCakeType,
+                            isDelete = false
                         };
                         break;
                     }
                 }
+            });
+
+
+            DeleteCommand = new RelayCommand<object>((p) =>
+            {
+                if (SelectedItem == null || SelectedSuplier == null || SelectedCakeType == null)
+                    return false;
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
+                var displayList = DataProvider.Ins.DB.Cakes.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+
+                return false;
+
+            }, (p) =>
+            {
+                MessageBox.Show("Bạn có chắn chắn xóa ????");
+                var cake = DataProvider.Ins.DB.Cakes.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                cake.DisplayName = SelectedItem.DisplayName;
+                cake.BarCode = SelectedItem.BarCode;
+                cake.IdSuplier = SelectedItem.IdSuplier;
+                cake.IdCakeType = SelectedItem.IdCakeType;
+                cake.isDelete = true;
+                DataProvider.Ins.DB.SaveChanges();
+ 
+                List = new ObservableCollection<Cake>(DataProvider.Ins.DB.Cakes.Where(x => x.isDelete != true));
             });
         }
     }

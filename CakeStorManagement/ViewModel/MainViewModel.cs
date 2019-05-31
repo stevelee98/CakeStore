@@ -1,10 +1,7 @@
 ﻿using CakeStorManagement.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -12,16 +9,18 @@ namespace CakeStorManagement.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        bool Isloaded = false;
+        private bool Isloaded = false;
 
-        private string _UserName;
-        public string  UserName { get => _UserName; set { _UserName = value; OnPropertyChanged(); } }
         private int _Id;
         public int Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
+        private string _UserName;
+        public string UserName { get => _UserName; set { _UserName = value; OnPropertyChanged(); } }
+        private UserRole _UserRole;
+        public UserRole UserRole { get => _UserRole; set { _UserRole = value; OnPropertyChanged(); } }
 
         public static string User;
         public static int IdUser;
-
+        public static int IdUserRole;
 
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand SuplierCommand { get; set; }
@@ -33,9 +32,10 @@ namespace CakeStorManagement.ViewModel
         public ICommand HistoryCommand { get; set; }
         public ICommand StatisticCommand { get; set; }
         public ICommand ViewStatisticCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
 
         private ObservableCollection<CakeCountRevenue> _CakeCountRevenue;
-        public ObservableCollection<CakeCountRevenue> CakeCountRevenue { get => _CakeCountRevenue; set{_CakeCountRevenue = value; OnPropertyChanged();}}
+        public ObservableCollection<CakeCountRevenue> CakeCountRevenue { get => _CakeCountRevenue; set { _CakeCountRevenue = value; OnPropertyChanged(); } }
 
         private ObservableCollection<Input_Output> _InputOutput;
         public ObservableCollection<Input_Output> InputOutput { get => _InputOutput; set { _InputOutput = value; OnPropertyChanged(); } }
@@ -58,12 +58,12 @@ namespace CakeStorManagement.ViewModel
         private string _CountMinDisplayName;
         public string CountMinDisplayName { get => _CountMinDisplayName; set { _CountMinDisplayName = value; OnPropertyChanged(); } }
         private double _RevenueInMonth;
-        public double RevenueInMonth { get => _RevenueInMonth; set {_RevenueInMonth = value;OnPropertyChanged();} }
-        
-        private DateTime? _DateStart;
-        public DateTime? DateStart { get => _DateStart; set { _DateStart = value; OnPropertyChanged(); } }
-        private DateTime? _DateEnd;
-        public DateTime? DateEnd { get => _DateEnd; set { _DateEnd = value; OnPropertyChanged(); } }
+        public double RevenueInMonth { get => _RevenueInMonth; set { _RevenueInMonth = value; OnPropertyChanged(); } }
+
+        private DateTime _DateStart;
+        public DateTime DateStart { get => _DateStart; set { _DateStart = value; OnPropertyChanged(); } }
+        private DateTime _DateEnd;
+        public DateTime DateEnd { get => _DateEnd; set { _DateEnd = value; OnPropertyChanged(); } }
 
         // ********************************Contrustor**********************************************//
 
@@ -74,15 +74,20 @@ namespace CakeStorManagement.ViewModel
             Input_Output input_Output1 = new Input_Output() { Title = "Số lượng nhập", Count = coutInput };
             Input_Output input_Output2 = new Input_Output() { Title = "Số lượng xuất", Count = coutOutput };
 
-            InputOutput = new ObservableCollection<Input_Output>();
-            InputOutput.Add(input_Output1);
-            InputOutput.Add(input_Output2);
+            DateStart = DateTime.Now;
+            DateEnd = DateTime.Now;
+
+            InputOutput = new ObservableCollection<Input_Output>
+            {
+                input_Output1,
+                input_Output2
+            };
 
             CakeListRevenue = new ObservableCollection<CakeListRevenue>();
             CakeCountRevenue = new ObservableCollection<CakeCountRevenue>();
             RevenueStore = new ObservableCollection<CakeListRevenue>();
             var CakeList = DataProvider.Ins.DB.Cakes;
-            foreach(var item in CakeList)
+            foreach (var item in CakeList)
             {
                 CakeCountRevenue ItemRevenue = new CakeCountRevenue();
                 ItemRevenue = itemRevenue(item);
@@ -98,38 +103,47 @@ namespace CakeStorManagement.ViewModel
             int Day = 7;
             double revenueInDay = 0;
             DateTime Now = DateTime.Now;
-            for (int i = Day; i >0; i--)
+            for (int i = Day; i > 0; i--)
             {
                 CakeListRevenue revenue = new ViewModel.CakeListRevenue();
                 revenueInDay = CalculateRevenueInDay(Now.Subtract(new TimeSpan(i, 0, 0, 0)));
 
-                    revenue = new CakeListRevenue() { Title = (Now.Subtract(new TimeSpan(i, 0, 0, 0))).ToString(), Revenue = revenueInDay };
-                    RevenueStore.Add(revenue);
-             
+                revenue = new CakeListRevenue() { Title = (Now.Subtract(new TimeSpan(i, 0, 0, 0))).ToString(), Revenue = revenueInDay };
+                RevenueStore.Add(revenue);
+
             }
 
 
             LoadedWindowCommand = new RelayCommand<Window>((p) => { return true; }, p =>
             {
                 Isloaded = true;
-                
+
                 if (p == null)
+                {
                     return;
+                }
+
                 p.Hide();
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.ShowDialog();
                 //p.Show();
                 if (loginWindow.DataContext == null)
+                {
                     return;
-                var loginVM = loginWindow.DataContext as LoginViewModel;
+                }
+
+                LoginViewModel loginVM = loginWindow.DataContext as LoginViewModel;
 
                 if (loginVM.Islogin)
                 {
-                    Id = loginVM.Id;
+                    Id = loginVM.IdUser;
+                    UserRole = loginVM.UserRole;
                     UserName = loginVM.UserName;
 
                     User = UserName;
                     IdUser = Id;
+                    IdUserRole = UserRole.Id;
+
                     p.Show();
                 }
                 else
@@ -138,38 +152,43 @@ namespace CakeStorManagement.ViewModel
                 }
             }
           );
-            
-            StatisticCommand = new RelayCommand<object>((p) => 
+
+            StatisticCommand = new RelayCommand<object>((p) =>
             {
                 if (DateStart == null || DateEnd == null)
+                {
                     return false;
+                }
+
                 return true;
-            }, p => 
+            }, p =>
             {
-                StatisticWindow statisticWindow = new StatisticWindow();
-                statisticWindow.DataContext = new StatictisViewModel();
+                StatisticWindow statisticWindow = new StatisticWindow
+                {
+                    DataContext = new StatictisViewModel()
+                };
                 ((StatictisViewModel)statisticWindow.DataContext).DateStart = DateStart;
                 ((StatictisViewModel)statisticWindow.DataContext).DateEnd = DateEnd;
                 statisticWindow.ShowDialog();
 
             }
             );
-            SuplierCommand = new RelayCommand<object>((p) => { if (Id != 1) { return false; } return true; }, p => { SuplierWindow wd = new SuplierWindow(); wd.ShowDialog(); });
-            CustomerCommand = new RelayCommand<object>((p) => { if (Id != 1) { return false; } return true; }, p => { CustomerWindow wd = new CustomerWindow(); wd.ShowDialog(); });
-            CakeCommand = new RelayCommand<object>((p) => { if (Id != 1) { return false; } return true; }, p => { CakeWindow wd = new CakeWindow(); wd.ShowDialog(); });
-            UserCommand = new RelayCommand<object>((p) => { if (Id != 1) { return false; } return true; }, p => { UserWindow wd = new UserWindow(); wd.ShowDialog(); });
-            InputCommand = new RelayCommand<object>((p) => { return true; }, p => { InputCake wd = new InputCake(); wd.ShowDialog(); });
-            OutputCommand = new RelayCommand<object>((p) => { return true; }, p => { OutputCake wd = new OutputCake(); wd.ShowDialog(); });
+            SuplierCommand = new RelayCommand<object>((p) => { return true; }, p => { SuplierWindow wd = new SuplierWindow(); wd.ShowDialog(); });
+            CustomerCommand = new RelayCommand<object>((p) => {return true; }, p => { CustomerWindow wd = new CustomerWindow(); wd.ShowDialog(); });
+            CakeCommand = new RelayCommand<object>((p) => { return true; }, p => { CakeWindow wd = new CakeWindow(); wd.ShowDialog(); });
+            UserCommand = new RelayCommand<object>((p) => { if (UserRole.DisplayName != "Admin") { return false; } return true; }, p => { UserWindow wd = new UserWindow(); wd.ShowDialog(); });
+            InputCommand = new RelayCommand<object>((p) => { return true; }, p => { InputCakeViewModel viewModel = new InputCakeViewModel(); InputCake wd = new InputCake(); wd.DataContext = viewModel; wd.ShowDialog();}); 
+            OutputCommand = new RelayCommand<object>((p) => { return true; }, p => { OutputCakeViewModel viewModel = new OutputCakeViewModel(); OutputCake wd = new OutputCake();wd.DataContext = viewModel; wd.ShowDialog(); });
             HistoryCommand = new RelayCommand<object>((p) => { return true; }, p => { HistoryWindow wd = new HistoryWindow(); wd.ShowDialog(); });
-            ViewStatisticCommand = new RelayCommand<object>((p) => { if (Id != 1) { return false; } return true; }, p => { ViewStatisticWindow wd = new ViewStatisticWindow(); wd.ShowDialog(); });
-
+            ViewStatisticCommand = new RelayCommand<object>((p) => {return true; }, p => { ViewStatisticViewModel viewModel = new ViewStatisticViewModel(); ViewStatisticWindow wd = new ViewStatisticWindow(); wd.DataContext = viewModel; wd.ShowDialog();  });
+            LogoutCommand = new RelayCommand<Window>((p) => {return true; }, p => { LoginWindow wd = new LoginWindow(); wd.Show(); });
         }
 
         public double CalculateRevenueInDay(DateTime date)
         {
             double RevenueInDay = 0;
 
-            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x => x.Output.DateOutput.Value.Day == date.Day && x.Output.DateOutput.Value.Month == date.Month && x.Output.DateOutput.Value.Year == date.Year);
+            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x => x.Output.DateOutput.Day == date.Day && x.Output.DateOutput.Month == date.Month && x.Output.DateOutput.Year == date.Year);
 
             foreach (var item in outputList)
             {
@@ -186,10 +205,10 @@ namespace CakeStorManagement.ViewModel
             dateTime = DateTime.Today;
             int thisMonth = dateTime.Month;
 
-            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x=> x.Output.DateOutput.Value.Month == thisMonth);
-            
+            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x => x.Output.DateOutput.Month == thisMonth);
 
-            foreach(var item in outputList)
+
+            foreach (var item in outputList)
             {
                 RevenueInMonth = RevenueInMonth + item.Count * item.OutputPrice;
             }
@@ -203,9 +222,9 @@ namespace CakeStorManagement.ViewModel
             CakeCountRevenue max = new CakeCountRevenue();
             max = list[0];
 
-            foreach (var item in list)
+            foreach (CakeCountRevenue item in list)
             {
-                if(item.countOutput > max.countOutput)
+                if (item.countOutput > max.countOutput)
                 {
                     max = item;
                 }
@@ -217,7 +236,7 @@ namespace CakeStorManagement.ViewModel
             CakeCountRevenue min = new CakeCountRevenue();
             min = list[0];
 
-            foreach (var item in list)
+            foreach (CakeCountRevenue item in list)
             {
                 if (item.countOutput < min.countOutput)
                 {
@@ -250,9 +269,9 @@ namespace CakeStorManagement.ViewModel
                 sumOutput = (int)outputInforList.Sum(p => p.Count);
             }
             inventory = sumInput - sumOutput;
-            foreach(var item in inputInforList)
+            foreach (var item in inputInforList)
             {
-                priceInput = priceInput +item.Count * item.InputPrice;
+                priceInput = priceInput + item.Count * item.InputPrice;
             }
             foreach (var item in outputInforList)
             {
@@ -275,7 +294,7 @@ namespace CakeStorManagement.ViewModel
             int Count = 0;
             var inputList = DataProvider.Ins.DB.InputInfors;
 
-            if(inputList != null && inputList.Count() >0)
+            if (inputList != null && inputList.Count() > 0)
             {
                 Count = (int)inputList.Sum(x => x.Count);
             }
@@ -295,7 +314,7 @@ namespace CakeStorManagement.ViewModel
     }
     public class Input_Output : BaseViewModel
     {
-        public string Title { get ; set; }
+        public string Title { get; set; }
         public int Count { get; set; }
     }
     public class CakeListRevenue : BaseViewModel
@@ -303,4 +322,6 @@ namespace CakeStorManagement.ViewModel
         public string Title { get; set; }
         public double Revenue { get; set; }
     }
+
 }
+

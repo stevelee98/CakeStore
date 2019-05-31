@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CakeStorManagement.ViewModel
@@ -28,7 +29,6 @@ namespace CakeStorManagement.ViewModel
                     Phone = SelectedItem.Phone;
                     Email = SelectedItem.Email;
                     ContractDate = SelectedItem.ContractDate;
-                    MoreInfor = SelectedItem.MoreInfor;
 
                 }
             }
@@ -46,25 +46,36 @@ namespace CakeStorManagement.ViewModel
         private string _Email;
         public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
 
-        private string _MoreInfor;
-        public string MoreInfor { get => _MoreInfor; set { _MoreInfor = value; OnPropertyChanged(); } }
-
-        private DateTime? _ContractDate; // thêm  "?": cho phép dữ liệu null
-        public DateTime? ContractDate { get => _ContractDate; set { _ContractDate = value; OnPropertyChanged(); } }
+        private DateTime _ContractDate; // thêm  "?": cho phép dữ liệu null
+        public DateTime ContractDate { get => _ContractDate; set { _ContractDate = value; OnPropertyChanged(); } }
 
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         public CustomerViewModel()
         {
-            List = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers);
+            List = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers.Where(x => x.isDelete != true));
 
             AddCommand = new RelayCommand<object>((p) =>
             {
+                int err = 0;
+                foreach (var item in List)
+                {
+                    if (DisplayName == item.DisplayName)
+                    {
+                        err = 1;
+                    }
+                }
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
+                if (err == 1)
+                {
+                    return false;
+                }
                 return true;
             }, p => {
-                var customer = new Customer() { DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, MoreInfor = MoreInfor, ContractDate = ContractDate };
+                var customer = new Customer() { DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, ContractDate = ContractDate };
                 DataProvider.Ins.DB.Customers.Add(customer);
                 DataProvider.Ins.DB.SaveChanges();
                 List.Add(customer);
@@ -76,7 +87,7 @@ namespace CakeStorManagement.ViewModel
                     return false;
                 if (String.IsNullOrEmpty(DisplayName))
                     return false;
-
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
                 if (SelectedItem == null)
                     return false;
                 var displayList = DataProvider.Ins.DB.Customers.Where(x => x.Id == SelectedItem.Id);
@@ -90,7 +101,6 @@ namespace CakeStorManagement.ViewModel
                 customer.Address = Address;
                 customer.Phone = Phone;
                 customer.Email = Email;
-                customer.MoreInfor = MoreInfor;
                 customer.ContractDate = ContractDate;
                 DataProvider.Ins.DB.SaveChanges();
                 SelectedItem.DisplayName = DisplayName;
@@ -98,10 +108,39 @@ namespace CakeStorManagement.ViewModel
                 {
                     if (List[i].Id == SelectedItem.Id)
                     {
-                        List[i] = new Customer() { Id = SelectedItem.Id, DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, MoreInfor = MoreInfor, ContractDate = ContractDate };
+                        List[i] = new Customer() { Id = SelectedItem.Id, DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, ContractDate = ContractDate };
                         break;
                     }
                 }
+            });
+
+            DeleteCommand = new RelayCommand<object>((p) =>
+            {
+                if (String.IsNullOrWhiteSpace(DisplayName))
+                    return false;
+                if (String.IsNullOrEmpty(DisplayName))
+                    return false;
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
+                if (SelectedItem == null)
+                    return false;
+                var displayList = DataProvider.Ins.DB.Customers.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                MessageBox.Show("Bạn có chắn chắn xóa ????");
+                var Customer = DataProvider.Ins.DB.Customers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                Customer.DisplayName = DisplayName;
+                Customer.Address = Address;
+                Customer.Phone = Phone;
+                Customer.Email = Email;
+                Customer.ContractDate = ContractDate;
+                Customer.isDelete = true;
+                DataProvider.Ins.DB.SaveChanges();
+
+                List = new ObservableCollection<Customer>(DataProvider.Ins.DB.Customers.Where(x => x.isDelete != true));
             });
         }
     }

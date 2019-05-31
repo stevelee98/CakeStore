@@ -52,7 +52,8 @@
                                 <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
                                 <GridViewColumn Header="Ngày xuất" DisplayMemberBinding="{Binding DateOutput, StringFormat='dd/MM/yyyy'}"></GridViewColumn>
                                 <GridViewColumn Header="Người xuất" DisplayMemberBinding="{Binding User.DisplayName}"></GridViewColumn>
-                            </GridView>
+                            <GridViewColumn Header="Phương thức thanh toánt" DisplayMemberBinding="{Binding PaymentType.DisplayName}"></GridViewColumn>
+                        </GridView>
                         </ListView.View>
                     </ListView>
 

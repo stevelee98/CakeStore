@@ -13,10 +13,10 @@ namespace CakeStorManagement.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CakeStoreEntities1 : DbContext
+    public partial class CakeStoreFinalProjectEntities : DbContext
     {
-        public CakeStoreEntities1()
-            : base("name=CakeStoreEntities1")
+        public CakeStoreFinalProjectEntities()
+            : base("name=CakeStoreFinalProjectEntities")
         {
         }
     
@@ -32,8 +32,8 @@ namespace CakeStorManagement.Model
         public virtual DbSet<InputInfor> InputInfors { get; set; }
         public virtual DbSet<Output> Outputs { get; set; }
         public virtual DbSet<OutputInfor> OutputInfors { get; set; }
+        public virtual DbSet<PayMentType> PayMentTypes { get; set; }
         public virtual DbSet<Suplier> Supliers { get; set; }
-        public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

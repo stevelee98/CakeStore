@@ -23,11 +23,11 @@ namespace CakeStorManagement.Model
             }
         }
 
-        public CakeStoreEntities1 DB { get; set; }
+        public CakeStoreFinalProjectEntities DB { get; set; }
 
         private DataProvider()
         {
-            DB = new CakeStoreEntities1();
+            DB = new CakeStoreFinalProjectEntities();
         }
     }
 }

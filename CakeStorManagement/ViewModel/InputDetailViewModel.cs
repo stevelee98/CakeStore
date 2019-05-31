@@ -25,8 +25,8 @@ namespace CakeStorManagement.ViewModel
         public int IdInput{get => _IdInput;set{_IdInput = value;OnPropertyChanged();}}
         private string _UserNameInput;
         public string UserNameInput { get => _UserNameInput; set { _UserNameInput = value; OnPropertyChanged();}}
-        private DateTime? _DateInput;
-        public DateTime? DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged();}}
+        private DateTime _DateInput;
+        public DateTime DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged();}}
         private int _TotalCount;
         public int TotalCount{get => _TotalCount; set{_TotalCount = value;OnPropertyChanged();}}
 
@@ -35,10 +35,11 @@ namespace CakeStorManagement.ViewModel
             InputWindow inputWindow = new InputWindow();
             var inputVM = inputWindow.DataContext as InputViewModel;         
 
-            IdInput =inputVM.IdInput;
+            IdInput = inputVM.IdInput;
+
             TotalCount = TotalCoutCake();
 
-            List = new ObservableCollection<InputInfor>(DataProvider.Ins.DB.InputInfors.Where(x=> x.IdInput == IdInput));
+            List = new ObservableCollection<InputInfor>(DataProvider.Ins.DB.InputInfors.Where(x=> x.IdInput == IdInput && x.isDelete == false));
 
             //CollectionView View = (CollectionView)CollectionViewSource.GetDefaultView(List);
 

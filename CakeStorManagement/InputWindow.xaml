@@ -53,7 +53,7 @@
                             <GridView>
                                 <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
                                 <GridViewColumn Header="Ngày nhập" DisplayMemberBinding="{Binding DateInput, StringFormat='dd/MM/yyyy'}"></GridViewColumn>
-                                <GridViewColumn Header="Người nhập" DisplayMemberBinding="{Binding User.DisplayName}"></GridViewColumn>
+                                <GridViewColumn Header="Người nhập" DisplayMemberBinding="{Binding User.UserName}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>

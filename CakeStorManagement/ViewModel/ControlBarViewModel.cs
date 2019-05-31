@@ -41,6 +41,7 @@ namespace CakeStorManagement.ViewModel
                 if (w != null)
                 {
                     w.Close();
+                    
                 }
             }
             );

@@ -46,10 +46,10 @@ namespace CakeStorManagement.ViewModel
         public string CountMinDisplayName { get => _CountMinDisplayName; set { _CountMinDisplayName = value; OnPropertyChanged(); } }
         private double _TotalRevenue;
         public double TotalRevenue { get => _TotalRevenue; set { _TotalRevenue = value; OnPropertyChanged(); } }
-        private DateTime? _DateStart;
-        public DateTime? DateStart { get => _DateStart; set { _DateStart = value; OnPropertyChanged(); } }
-        private DateTime? _DateEnd;
-        public DateTime? DateEnd { get => _DateEnd; set { _DateEnd = value; OnPropertyChanged(); } }
+        private DateTime _DateStart;
+        public DateTime DateStart { get => _DateStart; set { _DateStart = value; OnPropertyChanged(); } }
+        private DateTime _DateEnd;
+        public DateTime DateEnd { get => _DateEnd; set { _DateEnd = value; OnPropertyChanged(); } }
 
         // ********************************Contrustor**********************************************//
         public StatictisViewModel()
@@ -73,7 +73,7 @@ namespace CakeStorManagement.ViewModel
             CakeCountRevenue = new ObservableCollection<CakeCountRevenue>();//danh sách các đối tượng CakeCountRevenue
             RevenueStore = new ObservableCollection<CakeListRevenue>(); //danh sách để hiển thị doanh thu
 
-            TimeSpan daySpan = DateEnd.Value.Subtract(DateStart.Value);
+            TimeSpan daySpan = DateEnd.Subtract(DateStart);
             TimeSpan timeSpan = new TimeSpan(1, 0, 0, 0);
             int CountDay = daySpan.Days+1;
             int countInput = 0;
@@ -86,24 +86,24 @@ namespace CakeStorManagement.ViewModel
             for (int i=0; i<CountDay; i++)
             {
                 CakeListRevenue revenue = new ViewModel.CakeListRevenue();
-                revenueInDay = CalculateRevenueInDay(DateStart.Value.Add(new TimeSpan(i,0,0,0)));
+                revenueInDay = CalculateRevenueInDay(DateStart.Add(new TimeSpan(i,0,0,0)));
 
                 if (revenueInDay != 0)
                 {
-                    revenue = new CakeListRevenue() { Title = (DateStart.Value.Add(new TimeSpan(i, 0, 0, 0))).ToString(), Revenue = revenueInDay };
+                    revenue = new CakeListRevenue() { Title = (DateStart.Add(new TimeSpan(i, 0, 0, 0))).ToString(), Revenue = revenueInDay };
                     RevenueStore.Add(revenue);
                 }
-                countInput = countInput + CountInput(DateStart.Value.Add(new TimeSpan(i, 0, 0, 0)));
-                countOutput = countOutput + CountOutput(DateStart.Value.Add(new TimeSpan(i, 0, 0, 0)));
+                countInput = countInput + CountInput(DateStart.Add(new TimeSpan(i, 0, 0, 0)));
+                countOutput = countOutput + CountOutput(DateStart.Add(new TimeSpan(i, 0, 0, 0)));
             }
 
             foreach (var item in CakeList)
             {
                 CakeCountRevenue ItemRevenue = new CakeCountRevenue();
-                ItemRevenue = itemRevenueFromTo(item, DateStart.Value, DateEnd.Value);
+                ItemRevenue = itemRevenueFromTo(item, DateStart, DateEnd);
                 CakeCountRevenue.Add(ItemRevenue);
 
-                double revenue = TotalRevenueOneCakeFromStarttoEnd(item, DateStart.Value, DateEnd.Value);
+                double revenue = TotalRevenueOneCakeFromStarttoEnd(item, DateStart, DateEnd);
                 CakeListRevenue.Add(new CakeListRevenue() { Title = item.DisplayName, Revenue = revenue });
             }
 
@@ -129,13 +129,13 @@ namespace CakeStorManagement.ViewModel
             double TotalRevenueFromTo = 0;
 
 
-            TimeSpan daySpan = DateEnd.Value.Subtract(DateStart.Value);
+            TimeSpan daySpan = DateEnd.Subtract(DateStart);
             TimeSpan timeSpan = new TimeSpan(1, 0, 0, 0);
             int CountDay = daySpan.Days + 1;
 
             for (int i = 0; i < CountDay; i++)
             {
-                TotalRevenueFromTo = TotalRevenueFromTo + CalculateRevenueOneCakeInDay(cake, DateStart.Value.Add(new TimeSpan(i, 0, 0, 0)));
+                TotalRevenueFromTo = TotalRevenueFromTo + CalculateRevenueOneCakeInDay(cake, DateStart.Add(new TimeSpan(i, 0, 0, 0)));
             }
 
             return TotalRevenueFromTo ;
@@ -145,7 +145,7 @@ namespace CakeStorManagement.ViewModel
         {
             double RevenueInDay = 0;
 
-            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x =>x.IdCake == cake.Id && x.Output.DateOutput.Value.Day == date.Day && x.Output.DateOutput.Value.Month == date.Month && x.Output.DateOutput.Value.Year == date.Year);
+            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x =>x.IdCake == cake.Id && x.Output.DateOutput.Day == date.Day && x.Output.DateOutput.Month == date.Month && x.Output.DateOutput.Year == date.Year);
             foreach (var item in outputList)
             {
                 RevenueInDay = RevenueInDay + item.Count * item.OutputPrice;
@@ -159,7 +159,7 @@ namespace CakeStorManagement.ViewModel
         {
             double RevenueInDay = 0;
            
-            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x => x.Output.DateOutput.Value.Day == date.Day && x.Output.DateOutput.Value.Month == date.Month && x.Output.DateOutput.Value.Year == date.Year);
+            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x => x.Output.DateOutput.Day == date.Day && x.Output.DateOutput.Month == date.Month && x.Output.DateOutput.Year == date.Year);
 
             foreach (var item in outputList)
             {
@@ -210,17 +210,17 @@ namespace CakeStorManagement.ViewModel
             double revenue = 0;
             double profit = 0;
 
-            TimeSpan daySpan = DateEnd.Value.Subtract(DateStart.Value);
+            TimeSpan daySpan = DateEnd.Subtract(DateStart);
             TimeSpan timeSpan = new TimeSpan(1, 0, 0, 0);
             int CountDay = daySpan.Days + 1;
 
             for (int i = 0; i < CountDay; i++)
             {
-                sumInput = sumInput + itemRevenueInDay(cake, DateStart.Value.Add(new TimeSpan(i, 0, 0, 0))).countInput;
-                sumOutput = sumOutput + itemRevenueInDay(cake, DateStart.Value.Add(new TimeSpan(i, 0, 0, 0))).countOutput;
+                sumInput = sumInput + itemRevenueInDay(cake, DateStart.Add(new TimeSpan(i, 0, 0, 0))).countInput;
+                sumOutput = sumOutput + itemRevenueInDay(cake, DateStart.Add(new TimeSpan(i, 0, 0, 0))).countOutput;
                 inventory = sumOutput - sumInput;
-                revenue = revenue + itemRevenueInDay(cake, DateStart.Value.Add(new TimeSpan(i, 0, 0, 0))).revenue;
-                profit = profit + itemRevenueInDay(cake, DateStart.Value.Add(new TimeSpan(i, 0, 0, 0))).profit;
+                revenue = revenue + itemRevenueInDay(cake, DateStart.Add(new TimeSpan(i, 0, 0, 0))).revenue;
+                profit = profit + itemRevenueInDay(cake, DateStart.Add(new TimeSpan(i, 0, 0, 0))).profit;
             }
 
             temp.cake = cake;
@@ -235,8 +235,8 @@ namespace CakeStorManagement.ViewModel
         public CakeCountRevenue itemRevenueInDay(Cake cake, DateTime date)
         {
             CakeCountRevenue temp = new CakeCountRevenue();
-            var inputInforList = DataProvider.Ins.DB.InputInfors.Where(x => x.IdCake == cake.Id && x.Input.DateInput.Value.Day == date.Day && x.Input.DateInput.Value.Month == date.Month && x.Input.DateInput.Value.Year == date.Year);
-            var outputInforList = DataProvider.Ins.DB.OutputInfors.Where(x => x.IdCake == cake.Id && x.Output.DateOutput.Value.Day == date.Day && x.Output.DateOutput.Value.Month == date.Month && x.Output.DateOutput.Value.Year == date.Year);
+            var inputInforList = DataProvider.Ins.DB.InputInfors.Where(x => x.IdCake == cake.Id && x.Input.DateInput.Day == date.Day && x.Input.DateInput.Month == date.Month && x.Input.DateInput.Year == date.Year);
+            var outputInforList = DataProvider.Ins.DB.OutputInfors.Where(x => x.IdCake == cake.Id && x.Output.DateOutput.Day == date.Day && x.Output.DateOutput.Month == date.Month && x.Output.DateOutput.Year == date.Year);
 
             double priceInput = 0;
             double priceOutput = 0;
@@ -280,7 +280,7 @@ namespace CakeStorManagement.ViewModel
         public int CountInput(DateTime date )
         {
             int Count = 0;
-            var inputList = DataProvider.Ins.DB.InputInfors.Where(x => x.Input.DateInput.Value.Day == date.Day && x.Input.DateInput.Value.Month == date.Month && x.Input.DateInput.Value.Year == date.Year);
+            var inputList = DataProvider.Ins.DB.InputInfors.Where(x => x.Input.DateInput.Day == date.Day && x.Input.DateInput.Month == date.Month && x.Input.DateInput.Year == date.Year);
 
             if (inputList != null && inputList.Count() > 0)
             {
@@ -293,7 +293,7 @@ namespace CakeStorManagement.ViewModel
         public int CountOutput(DateTime date)
         {
             int Count = 0;
-            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x => x.Output.DateOutput.Value.Day == date.Day && x.Output.DateOutput.Value.Month == date.Month && x.Output.DateOutput.Value.Year == date.Year);
+            var outputList = DataProvider.Ins.DB.OutputInfors.Where(x => x.Output.DateOutput.Day == date.Day && x.Output.DateOutput.Month == date.Month && x.Output.DateOutput.Year == date.Year);
 
             if (outputList != null && outputList.Count() > 0)
             {
@@ -306,7 +306,7 @@ namespace CakeStorManagement.ViewModel
     //public class Input_Output : BaseViewModel
     //{
     //    public string Title { get; set; }
-    //    public int Count { get; set; }    
+    //    public int Count { get; set; }
     //}
     //public class CakeListRevenue : BaseViewModel
     //{

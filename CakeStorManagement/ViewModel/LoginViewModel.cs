@@ -16,11 +16,15 @@ namespace CakeStorManagement.ViewModel
 
         private string _UserName;
         public string UserName { get => _UserName; set { _UserName = value; OnPropertyChanged(); } }
+
+        private int _IdUser;
+        public int IdUser { get => _IdUser; set { _IdUser = value; OnPropertyChanged(); } }
+
         private string _PassWord;
         public string PassWord { get => _PassWord; set { _PassWord = value; OnPropertyChanged(); } }
 
-        private int _Id;
-        public int Id { get => _Id; set { _Id = value; OnPropertyChanged(); } }
+        private UserRole _UserRole;
+        public UserRole UserRole { get => _UserRole; set { _UserRole = value; OnPropertyChanged(); } }
 
         public ICommand LoginCommand { get; set; }
         public ICommand PassWordChangedCommand { get; set; }
@@ -36,21 +40,22 @@ namespace CakeStorManagement.ViewModel
             {
                 if (p == null)
                     return;
-                var account = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName && x.PassWords == PassWord).Count();
+                var account = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName && x.PassWords == PassWord && x.isDelete == false).Count();
                 if (account > 0)
                 {
                     Islogin = true;
                     var TempId = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName);
                     foreach (var item in TempId)
                     {
-                        Id = item.Id;
+                        UserRole = item.UserRole;
+                        IdUser = item.Id;
                         break;
-
                     }
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.DataContext = new MainViewModel();
                     ((MainViewModel)mainWindow.DataContext).UserName = UserName;
-                    ((MainViewModel)mainWindow.DataContext).Id = Id;                   
+                    ((MainViewModel)mainWindow.DataContext).UserRole = UserRole;
+                    ((MainViewModel)mainWindow.DataContext).Id = IdUser;
 
                     p.Close();
                 }

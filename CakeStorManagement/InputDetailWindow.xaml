@@ -43,13 +43,13 @@
             <materialDesign:Card Grid.Row="0" Margin="5,5,5,0" Grid.ColumnSpan="2">
                 <WrapPanel Margin=" 0 0 0 10">
                     <TextBox materialDesign:HintAssist.Hint="ID đơn hàng" Margin="5 5 15 5" 
-                             Text="{Binding IdInput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                             Text="{Binding IdInput,UpdateSourceTrigger=PropertyChanged}" Focusable="False" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="Người tạo" Margin="5 5 15 5" 
-                             Text="{Binding UserNameInput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                             Text="{Binding UserNameInput,UpdateSourceTrigger=PropertyChanged}" Focusable="False" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="Ngày tạo" Margin="5 5 15 5" 
-                             Text="{Binding DateInput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                             Text="{Binding DateInput,UpdateSourceTrigger=PropertyChanged}" Focusable="False" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <TextBox materialDesign:HintAssist.Hint="Số lượng hàng nhập" Margin="5 5 15 5" 
-                             Text="{Binding TotalCount,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                             Text="{Binding TotalCount,UpdateSourceTrigger=PropertyChanged}" Focusable="False" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </WrapPanel>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1" Margin="5" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
@@ -74,7 +74,6 @@
                                     </GridViewColumnHeader>
                                 </GridViewColumn>
                                 <GridViewColumn Header="Giá nhập" DisplayMemberBinding="{Binding InputPrice}"></GridViewColumn>
-                                <GridViewColumn Header="Giá xuất" DisplayMemberBinding="{Binding OutputPrice}"></GridViewColumn>
                                 <GridViewColumn Header="Trạng thái"  DisplayMemberBinding="{Binding Status}"></GridViewColumn>
                             </GridView>
                         </ListView.View>

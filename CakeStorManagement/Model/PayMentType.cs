@@ -12,18 +12,19 @@ namespace CakeStorManagement.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Unit
+    public partial class PayMentType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Unit()
+        public PayMentType()
         {
-            this.Cakes = new HashSet<Cake>();
+            this.OutputInfors = new HashSet<OutputInfor>();
         }
     
         public int Id { get; set; }
         public string DisplayName { get; set; }
+        public bool isDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cake> Cakes { get; set; }
+        public virtual ICollection<OutputInfor> OutputInfors { get; set; }
     }
 }

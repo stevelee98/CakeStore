@@ -17,8 +17,8 @@ namespace CakeStorManagement.ViewModel
         public int IdInput {get => _Id;set{ _Id = value;OnPropertyChanged();}}
         private string _UserNameInput;
         public string UserNameInput { get => _UserNameInput; set { _UserNameInput = value; OnPropertyChanged();}}
-        private DateTime? _DateInput;
-        public DateTime? DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged();}}
+        private DateTime _DateInput;
+        public DateTime DateInput { get => _DateInput; set { _DateInput = value; OnPropertyChanged();}}
 
         private ObservableCollection<Input> _List;
         public ObservableCollection<Input> List { get => _List; set { _List = value; OnPropertyChanged();}}
@@ -34,13 +34,13 @@ namespace CakeStorManagement.ViewModel
                 if (SelectedItem != null)
                 {
                     IdInput = SelectedItem.Id;
-
+                   
                     InputDetailWindow inputDetail = new InputDetailWindow();
                     inputDetail.DataContext = new InputDetailViewModel();
                     ((InputDetailViewModel)inputDetail.DataContext).IdInput = SelectedItem.Id;
                     ((InputDetailViewModel)inputDetail.DataContext).DateInput = SelectedItem.DateInput;
-                    ((InputDetailViewModel)inputDetail.DataContext).UserNameInput = SelectedItem.User.DisplayName;
-                    inputDetail.ShowDialog();               
+                    ((InputDetailViewModel)inputDetail.DataContext).UserNameInput = SelectedItem.User.UserName;
+                    inputDetail.ShowDialog();
                 }
                 OnPropertyChanged();
             }

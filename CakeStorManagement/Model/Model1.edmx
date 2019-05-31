@@ -4,36 +4,37 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CakeStoreModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CakeStoreFinalProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cake">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar(max)" />
-          <Property Name="CakeType" Type="int" Nullable="false" />
-          <Property Name="IdUnit" Type="int" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdCakeType" Type="int" Nullable="false" />
           <Property Name="IdSuplier" Type="int" Nullable="false" />
-          <Property Name="BarCode" Type="nvarchar(max)" />
+          <Property Name="BarCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CakeType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar" MaxLength="128" />
+          <Property Name="DisplayName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar(max)" />
-          <Property Name="Address" Type="nvarchar(max)" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
-          <Property Name="Email" Type="nvarchar" MaxLength="200" />
-          <Property Name="MoreInfor" Type="nvarchar(max)" />
-          <Property Name="ContractDate" Type="datetime" />
+          <Property Name="DisplayName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ContractDate" Type="datetime" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Input">
           <Key>
@@ -41,19 +42,20 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUser" Type="int" Nullable="false" />
-          <Property Name="DateInput" Type="datetime" />
+          <Property Name="DateInput" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="InputInfor">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdCake" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IdInput" Type="int" Nullable="false" />
-          <Property Name="Count" Type="int" />
-          <Property Name="InputPrice" Type="float" />
-          <Property Name="OutputPrice" Type="float" />
-          <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="IdCake" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="IdSuplier" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="InputPrice" Type="float" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Output">
           <Key>
@@ -61,7 +63,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUser" Type="int" Nullable="false" />
-          <Property Name="DateOutput" Type="datetime" />
+          <Property Name="DateOutput" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="OutputInfor">
           <Key>
@@ -69,49 +71,53 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdCake" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="IdCustomer" Type="int" Nullable="false" />
           <Property Name="IdOutput" Type="int" Nullable="false" />
-          <Property Name="Count" Type="int" />
-          <Property Name="Status" Type="nvarchar(max)" />
-          <Property Name="OutputPrice" Type="float" />
+          <Property Name="IdCustomer" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="OutputPrice" Type="float" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdPayment" Type="int" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PayMentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Suplier">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar(max)" />
-          <Property Name="Address" Type="nvarchar(max)" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
-          <Property Name="Email" Type="nvarchar" MaxLength="200" />
-          <Property Name="MoreInfor" Type="nvarchar(max)" />
-          <Property Name="ContractDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="Unit">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="DisplayName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ContractDate" Type="datetime" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar(max)" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar(max)" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="PassWords" Type="nvarchar(max)" />
-          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PassWords" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdUserRole" Type="int" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Cake__CakeType__300424B4">
+        <Association Name="FK__Cake__IdCakeType__25869641">
           <End Role="CakeType" Type="Self.CakeType" Multiplicity="1" />
           <End Role="Cake" Type="Self.Cake" Multiplicity="*" />
           <ReferentialConstraint>
@@ -119,11 +125,11 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cake">
-              <PropertyRef Name="CakeType" />
+              <PropertyRef Name="IdCakeType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cake__IdSuplier__25869641">
+        <Association Name="FK__Cake__IdSuplier__267ABA7A">
           <End Role="Suplier" Type="Self.Suplier" Multiplicity="1" />
           <End Role="Cake" Type="Self.Cake" Multiplicity="*" />
           <ReferentialConstraint>
@@ -135,19 +141,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cake__IdUnit__267ABA7A">
-          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
-          <End Role="Cake" Type="Self.Cake" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Cake">
-              <PropertyRef Name="IdUnit" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Input__IdUser__276EDEB3">
+        <Association Name="FK__Input__IdUser__286302EC">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Input" Type="Self.Input" Multiplicity="*" />
           <ReferentialConstraint>
@@ -159,7 +153,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InputInfo__IdCak__286302EC">
+        <Association Name="FK__InputInfo__IdCak__2A4B4B5E">
           <End Role="Cake" Type="Self.Cake" Multiplicity="1" />
           <End Role="InputInfor" Type="Self.InputInfor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -183,7 +177,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Output__IdUser__2A4B4B5E">
+        <Association Name="FK__InputInfo__IdSup__276EDEB3">
+          <End Role="Suplier" Type="Self.Suplier" Multiplicity="1" />
+          <End Role="InputInfor" Type="Self.InputInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InputInfor">
+              <PropertyRef Name="IdSuplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Output__IdUser__2E1BDC42">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Output" Type="Self.Output" Multiplicity="*" />
           <ReferentialConstraint>
@@ -195,7 +201,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdCak__2B3F6F97">
+        <Association Name="FK__OutputInf__IdCak__2F10007B">
           <End Role="Cake" Type="Self.Cake" Multiplicity="1" />
           <End Role="OutputInfor" Type="Self.OutputInfor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -207,7 +213,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdCus__2C3393D0">
+        <Association Name="FK__OutputInf__IdCus__2B3F6F97">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="OutputInfor" Type="Self.OutputInfor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -219,7 +225,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdOut__2E1BDC42">
+        <Association Name="FK__OutputInf__IdOut__2C3393D0">
           <End Role="Output" Type="Self.Output" Multiplicity="1" />
           <End Role="OutputInfor" Type="Self.OutputInfor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -231,7 +237,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__IdRole__2F10007B">
+        <Association Name="FK__OutputInf__IdPay__2D27B809">
+          <End Role="PayMentType" Type="Self.PayMentType" Multiplicity="1" />
+          <End Role="OutputInfor" Type="Self.OutputInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayMentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutputInfor">
+              <PropertyRef Name="IdPayment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__IdUserRol__300424B4">
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -239,11 +257,11 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Users">
-              <PropertyRef Name="IdRole" />
+              <PropertyRef Name="IdUserRole" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CakeStoreModel1StoreContainer">
+        <EntityContainer Name="CakeStoreFinalProjectModelStoreContainer">
           <EntitySet Name="Cake" EntityType="Self.Cake" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CakeType" EntityType="Self.CakeType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -251,27 +269,23 @@
           <EntitySet Name="InputInfor" EntityType="Self.InputInfor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Output" EntityType="Self.Output" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OutputInfor" EntityType="Self.OutputInfor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayMentType" EntityType="Self.PayMentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suplier" EntityType="Self.Suplier" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Cake__CakeType__300424B4" Association="Self.FK__Cake__CakeType__300424B4">
+          <AssociationSet Name="FK__Cake__IdCakeType__25869641" Association="Self.FK__Cake__IdCakeType__25869641">
             <End Role="CakeType" EntitySet="CakeType" />
             <End Role="Cake" EntitySet="Cake" />
           </AssociationSet>
-          <AssociationSet Name="FK__Cake__IdSuplier__25869641" Association="Self.FK__Cake__IdSuplier__25869641">
+          <AssociationSet Name="FK__Cake__IdSuplier__267ABA7A" Association="Self.FK__Cake__IdSuplier__267ABA7A">
             <End Role="Suplier" EntitySet="Suplier" />
             <End Role="Cake" EntitySet="Cake" />
           </AssociationSet>
-          <AssociationSet Name="FK__Cake__IdUnit__267ABA7A" Association="Self.FK__Cake__IdUnit__267ABA7A">
-            <End Role="Unit" EntitySet="Unit" />
-            <End Role="Cake" EntitySet="Cake" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Input__IdUser__276EDEB3" Association="Self.FK__Input__IdUser__276EDEB3">
+          <AssociationSet Name="FK__Input__IdUser__286302EC" Association="Self.FK__Input__IdUser__286302EC">
             <End Role="Users" EntitySet="Users" />
             <End Role="Input" EntitySet="Input" />
           </AssociationSet>
-          <AssociationSet Name="FK__InputInfo__IdCak__286302EC" Association="Self.FK__InputInfo__IdCak__286302EC">
+          <AssociationSet Name="FK__InputInfo__IdCak__2A4B4B5E" Association="Self.FK__InputInfo__IdCak__2A4B4B5E">
             <End Role="Cake" EntitySet="Cake" />
             <End Role="InputInfor" EntitySet="InputInfor" />
           </AssociationSet>
@@ -279,23 +293,31 @@
             <End Role="Input" EntitySet="Input" />
             <End Role="InputInfor" EntitySet="InputInfor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Output__IdUser__2A4B4B5E" Association="Self.FK__Output__IdUser__2A4B4B5E">
+          <AssociationSet Name="FK__InputInfo__IdSup__276EDEB3" Association="Self.FK__InputInfo__IdSup__276EDEB3">
+            <End Role="Suplier" EntitySet="Suplier" />
+            <End Role="InputInfor" EntitySet="InputInfor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Output__IdUser__2E1BDC42" Association="Self.FK__Output__IdUser__2E1BDC42">
             <End Role="Users" EntitySet="Users" />
             <End Role="Output" EntitySet="Output" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdCak__2B3F6F97" Association="Self.FK__OutputInf__IdCak__2B3F6F97">
+          <AssociationSet Name="FK__OutputInf__IdCak__2F10007B" Association="Self.FK__OutputInf__IdCak__2F10007B">
             <End Role="Cake" EntitySet="Cake" />
             <End Role="OutputInfor" EntitySet="OutputInfor" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdCus__2C3393D0" Association="Self.FK__OutputInf__IdCus__2C3393D0">
+          <AssociationSet Name="FK__OutputInf__IdCus__2B3F6F97" Association="Self.FK__OutputInf__IdCus__2B3F6F97">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="OutputInfor" EntitySet="OutputInfor" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdOut__2E1BDC42" Association="Self.FK__OutputInf__IdOut__2E1BDC42">
+          <AssociationSet Name="FK__OutputInf__IdOut__2C3393D0" Association="Self.FK__OutputInf__IdOut__2C3393D0">
             <End Role="Output" EntitySet="Output" />
             <End Role="OutputInfor" EntitySet="OutputInfor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__IdRole__2F10007B" Association="Self.FK__Users__IdRole__2F10007B">
+          <AssociationSet Name="FK__OutputInf__IdPay__2D27B809" Association="Self.FK__OutputInf__IdPay__2D27B809">
+            <End Role="PayMentType" EntitySet="PayMentType" />
+            <End Role="OutputInfor" EntitySet="OutputInfor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__IdUserRol__300424B4" Association="Self.FK__Users__IdUserRol__300424B4">
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
@@ -304,43 +326,43 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="CakeStoreModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="CakeStoreFinalProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Cake">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CakeType" Type="Int32" Nullable="false" />
-          <Property Name="IdUnit" Type="Int32" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdCakeType" Type="Int32" Nullable="false" />
           <Property Name="IdSuplier" Type="Int32" Nullable="false" />
-          <Property Name="BarCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CakeType1" Relationship="Self.FK__Cake__CakeType__300424B4" FromRole="Cake" ToRole="CakeType" />
-          <NavigationProperty Name="Suplier" Relationship="Self.FK__Cake__IdSuplier__25869641" FromRole="Cake" ToRole="Suplier" />
-          <NavigationProperty Name="Unit" Relationship="Self.FK__Cake__IdUnit__267ABA7A" FromRole="Cake" ToRole="Unit" />
-          <NavigationProperty Name="InputInfors" Relationship="Self.FK__InputInfo__IdCak__286302EC" FromRole="Cake" ToRole="InputInfor" />
-          <NavigationProperty Name="OutputInfors" Relationship="Self.FK__OutputInf__IdCak__2B3F6F97" FromRole="Cake" ToRole="OutputInfor" />
+          <Property Name="BarCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CakeType" Relationship="Self.FK__Cake__IdCakeType__25869641" FromRole="Cake" ToRole="CakeType" />
+          <NavigationProperty Name="Suplier" Relationship="Self.FK__Cake__IdSuplier__267ABA7A" FromRole="Cake" ToRole="Suplier" />
+          <NavigationProperty Name="InputInfors" Relationship="Self.FK__InputInfo__IdCak__2A4B4B5E" FromRole="Cake" ToRole="InputInfor" />
+          <NavigationProperty Name="OutputInfors" Relationship="Self.FK__OutputInf__IdCak__2F10007B" FromRole="Cake" ToRole="OutputInfor" />
         </EntityType>
         <EntityType Name="CakeType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DisplayName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Cakes" Relationship="Self.FK__Cake__CakeType__300424B4" FromRole="CakeType" ToRole="Cake" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cakes" Relationship="Self.FK__Cake__IdCakeType__25869641" FromRole="CakeType" ToRole="Cake" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MoreInfor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContractDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="OutputInfors" Relationship="Self.FK__OutputInf__IdCus__2C3393D0" FromRole="Customer" ToRole="OutputInfor" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContractDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OutputInfors" Relationship="Self.FK__OutputInf__IdCus__2B3F6F97" FromRole="Customer" ToRole="OutputInfor" />
         </EntityType>
         <EntityType Name="Input">
           <Key>
@@ -348,8 +370,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="Int32" Nullable="false" />
-          <Property Name="DateInput" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Input__IdUser__276EDEB3" FromRole="Input" ToRole="Users" />
+          <Property Name="DateInput" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Input__IdUser__286302EC" FromRole="Input" ToRole="Users" />
           <NavigationProperty Name="InputInfors" Relationship="Self.FK__InputInfo__IdInp__29572725" FromRole="Input" ToRole="InputInfor" />
         </EntityType>
         <EntityType Name="InputInfor">
@@ -357,14 +379,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdCake" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdInput" Type="Int32" Nullable="false" />
-          <Property Name="Count" Type="Int32" />
-          <Property Name="InputPrice" Type="Double" />
-          <Property Name="OutputPrice" Type="Double" />
-          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Cake" Relationship="Self.FK__InputInfo__IdCak__286302EC" FromRole="InputInfor" ToRole="Cake" />
+          <Property Name="IdCake" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdSuplier" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="InputPrice" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cake" Relationship="Self.FK__InputInfo__IdCak__2A4B4B5E" FromRole="InputInfor" ToRole="Cake" />
           <NavigationProperty Name="Input" Relationship="Self.FK__InputInfo__IdInp__29572725" FromRole="InputInfor" ToRole="Input" />
+          <NavigationProperty Name="Suplier" Relationship="Self.FK__InputInfo__IdSup__276EDEB3" FromRole="InputInfor" ToRole="Suplier" />
         </EntityType>
         <EntityType Name="Output">
           <Key>
@@ -372,9 +396,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="Int32" Nullable="false" />
-          <Property Name="DateOutput" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Output__IdUser__2A4B4B5E" FromRole="Output" ToRole="Users" />
-          <NavigationProperty Name="OutputInfors" Relationship="Self.FK__OutputInf__IdOut__2E1BDC42" FromRole="Output" ToRole="OutputInfor" />
+          <Property Name="DateOutput" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Output__IdUser__2E1BDC42" FromRole="Output" ToRole="Users" />
+          <NavigationProperty Name="OutputInfors" Relationship="Self.FK__OutputInf__IdOut__2C3393D0" FromRole="Output" ToRole="OutputInfor" />
         </EntityType>
         <EntityType Name="OutputInfor">
           <Key>
@@ -382,58 +406,64 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdCake" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdCustomer" Type="Int32" Nullable="false" />
           <Property Name="IdOutput" Type="Int32" Nullable="false" />
-          <Property Name="Count" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OutputPrice" Type="Double" />
-          <NavigationProperty Name="Cake" Relationship="Self.FK__OutputInf__IdCak__2B3F6F97" FromRole="OutputInfor" ToRole="Cake" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__OutputInf__IdCus__2C3393D0" FromRole="OutputInfor" ToRole="Customer" />
-          <NavigationProperty Name="Output" Relationship="Self.FK__OutputInf__IdOut__2E1BDC42" FromRole="OutputInfor" ToRole="Output" />
+          <Property Name="IdCustomer" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="OutputPrice" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdPayment" Type="Int32" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cake" Relationship="Self.FK__OutputInf__IdCak__2F10007B" FromRole="OutputInfor" ToRole="Cake" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__OutputInf__IdCus__2B3F6F97" FromRole="OutputInfor" ToRole="Customer" />
+          <NavigationProperty Name="Output" Relationship="Self.FK__OutputInf__IdOut__2C3393D0" FromRole="OutputInfor" ToRole="Output" />
+          <NavigationProperty Name="PayMentType" Relationship="Self.FK__OutputInf__IdPay__2D27B809" FromRole="OutputInfor" ToRole="PayMentType" />
+        </EntityType>
+        <EntityType Name="PayMentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OutputInfors" Relationship="Self.FK__OutputInf__IdPay__2D27B809" FromRole="PayMentType" ToRole="OutputInfor" />
         </EntityType>
         <EntityType Name="Suplier">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MoreInfor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContractDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Cakes" Relationship="Self.FK__Cake__IdSuplier__25869641" FromRole="Suplier" ToRole="Cake" />
-        </EntityType>
-        <EntityType Name="Unit">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Cakes" Relationship="Self.FK__Cake__IdUnit__267ABA7A" FromRole="Unit" ToRole="Cake" />
+          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContractDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Cakes" Relationship="Self.FK__Cake__IdSuplier__267ABA7A" FromRole="Suplier" ToRole="Cake" />
+          <NavigationProperty Name="InputInfors" Relationship="Self.FK__InputInfo__IdSup__276EDEB3" FromRole="Suplier" ToRole="InputInfor" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__IdRole__2F10007B" FromRole="UserRole" ToRole="Users" />
+          <Property Name="DisplayName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__IdUserRol__300424B4" FromRole="UserRole" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PassWords" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IdRole" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Inputs" Relationship="Self.FK__Input__IdUser__276EDEB3" FromRole="Users" ToRole="Input" />
-          <NavigationProperty Name="Outputs" Relationship="Self.FK__Output__IdUser__2A4B4B5E" FromRole="Users" ToRole="Output" />
-          <NavigationProperty Name="UserRole" Relationship="Self.FK__Users__IdRole__2F10007B" FromRole="Users" ToRole="UserRole" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PassWords" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdUserRole" Type="Int32" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Inputs" Relationship="Self.FK__Input__IdUser__286302EC" FromRole="Users" ToRole="Input" />
+          <NavigationProperty Name="Outputs" Relationship="Self.FK__Output__IdUser__2E1BDC42" FromRole="Users" ToRole="Output" />
+          <NavigationProperty Name="UserRole" Relationship="Self.FK__Users__IdUserRol__300424B4" FromRole="Users" ToRole="UserRole" />
         </EntityType>
-        <Association Name="FK__Cake__CakeType__300424B4">
+        <Association Name="FK__Cake__IdCakeType__25869641">
           <End Role="CakeType" Type="Self.CakeType" Multiplicity="1" />
           <End Role="Cake" Type="Self.Cake" Multiplicity="*" />
           <ReferentialConstraint>
@@ -441,11 +471,11 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cake">
-              <PropertyRef Name="CakeType" />
+              <PropertyRef Name="IdCakeType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cake__IdSuplier__25869641">
+        <Association Name="FK__Cake__IdSuplier__267ABA7A">
           <End Role="Suplier" Type="Self.Suplier" Multiplicity="1" />
           <End Role="Cake" Type="Self.Cake" Multiplicity="*" />
           <ReferentialConstraint>
@@ -457,19 +487,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cake__IdUnit__267ABA7A">
-          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
-          <End Role="Cake" Type="Self.Cake" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Cake">
-              <PropertyRef Name="IdUnit" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__InputInfo__IdCak__286302EC">
+        <Association Name="FK__InputInfo__IdCak__2A4B4B5E">
           <End Role="Cake" Type="Self.Cake" Multiplicity="1" />
           <End Role="InputInfor" Type="Self.InputInfor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -481,7 +499,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdCak__2B3F6F97">
+        <Association Name="FK__OutputInf__IdCak__2F10007B">
           <End Role="Cake" Type="Self.Cake" Multiplicity="1" />
           <End Role="OutputInfor" Type="Self.OutputInfor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -493,7 +511,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdCus__2C3393D0">
+        <Association Name="FK__OutputInf__IdCus__2B3F6F97">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="OutputInfor" Type="Self.OutputInfor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -505,7 +523,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Input__IdUser__276EDEB3">
+        <Association Name="FK__Input__IdUser__286302EC">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Input" Type="Self.Input" Multiplicity="*" />
           <ReferentialConstraint>
@@ -529,7 +547,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Output__IdUser__2A4B4B5E">
+        <Association Name="FK__InputInfo__IdSup__276EDEB3">
+          <End Role="Suplier" Type="Self.Suplier" Multiplicity="1" />
+          <End Role="InputInfor" Type="Self.InputInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InputInfor">
+              <PropertyRef Name="IdSuplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Output__IdUser__2E1BDC42">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Output" Type="Self.Output" Multiplicity="*" />
           <ReferentialConstraint>
@@ -541,7 +571,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OutputInf__IdOut__2E1BDC42">
+        <Association Name="FK__OutputInf__IdOut__2C3393D0">
           <End Role="Output" Type="Self.Output" Multiplicity="1" />
           <End Role="OutputInfor" Type="Self.OutputInfor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -553,7 +583,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__IdRole__2F10007B">
+        <Association Name="FK__OutputInf__IdPay__2D27B809">
+          <End Role="PayMentType" Type="Self.PayMentType" Multiplicity="1" />
+          <End Role="OutputInfor" Type="Self.OutputInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayMentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OutputInfor">
+              <PropertyRef Name="IdPayment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__IdUserRol__300424B4">
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -561,11 +603,11 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Users">
-              <PropertyRef Name="IdRole" />
+              <PropertyRef Name="IdUserRole" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CakeStoreEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CakeStoreFinalProjectEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cakes" EntityType="Self.Cake" />
           <EntitySet Name="CakeTypes" EntityType="Self.CakeType" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
@@ -573,35 +615,31 @@
           <EntitySet Name="InputInfors" EntityType="Self.InputInfor" />
           <EntitySet Name="Outputs" EntityType="Self.Output" />
           <EntitySet Name="OutputInfors" EntityType="Self.OutputInfor" />
+          <EntitySet Name="PayMentTypes" EntityType="Self.PayMentType" />
           <EntitySet Name="Supliers" EntityType="Self.Suplier" />
-          <EntitySet Name="Units" EntityType="Self.Unit" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Cake__CakeType__300424B4" Association="Self.FK__Cake__CakeType__300424B4">
+          <AssociationSet Name="FK__Cake__IdCakeType__25869641" Association="Self.FK__Cake__IdCakeType__25869641">
             <End Role="CakeType" EntitySet="CakeTypes" />
             <End Role="Cake" EntitySet="Cakes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Cake__IdSuplier__25869641" Association="Self.FK__Cake__IdSuplier__25869641">
+          <AssociationSet Name="FK__Cake__IdSuplier__267ABA7A" Association="Self.FK__Cake__IdSuplier__267ABA7A">
             <End Role="Suplier" EntitySet="Supliers" />
             <End Role="Cake" EntitySet="Cakes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Cake__IdUnit__267ABA7A" Association="Self.FK__Cake__IdUnit__267ABA7A">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="Cake" EntitySet="Cakes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__InputInfo__IdCak__286302EC" Association="Self.FK__InputInfo__IdCak__286302EC">
+          <AssociationSet Name="FK__InputInfo__IdCak__2A4B4B5E" Association="Self.FK__InputInfo__IdCak__2A4B4B5E">
             <End Role="Cake" EntitySet="Cakes" />
             <End Role="InputInfor" EntitySet="InputInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdCak__2B3F6F97" Association="Self.FK__OutputInf__IdCak__2B3F6F97">
+          <AssociationSet Name="FK__OutputInf__IdCak__2F10007B" Association="Self.FK__OutputInf__IdCak__2F10007B">
             <End Role="Cake" EntitySet="Cakes" />
             <End Role="OutputInfor" EntitySet="OutputInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdCus__2C3393D0" Association="Self.FK__OutputInf__IdCus__2C3393D0">
+          <AssociationSet Name="FK__OutputInf__IdCus__2B3F6F97" Association="Self.FK__OutputInf__IdCus__2B3F6F97">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="OutputInfor" EntitySet="OutputInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK__Input__IdUser__276EDEB3" Association="Self.FK__Input__IdUser__276EDEB3">
+          <AssociationSet Name="FK__Input__IdUser__286302EC" Association="Self.FK__Input__IdUser__286302EC">
             <End Role="Users" EntitySet="Users" />
             <End Role="Input" EntitySet="Inputs" />
           </AssociationSet>
@@ -609,15 +647,23 @@
             <End Role="Input" EntitySet="Inputs" />
             <End Role="InputInfor" EntitySet="InputInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK__Output__IdUser__2A4B4B5E" Association="Self.FK__Output__IdUser__2A4B4B5E">
+          <AssociationSet Name="FK__InputInfo__IdSup__276EDEB3" Association="Self.FK__InputInfo__IdSup__276EDEB3">
+            <End Role="Suplier" EntitySet="Supliers" />
+            <End Role="InputInfor" EntitySet="InputInfors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Output__IdUser__2E1BDC42" Association="Self.FK__Output__IdUser__2E1BDC42">
             <End Role="Users" EntitySet="Users" />
             <End Role="Output" EntitySet="Outputs" />
           </AssociationSet>
-          <AssociationSet Name="FK__OutputInf__IdOut__2E1BDC42" Association="Self.FK__OutputInf__IdOut__2E1BDC42">
+          <AssociationSet Name="FK__OutputInf__IdOut__2C3393D0" Association="Self.FK__OutputInf__IdOut__2C3393D0">
             <End Role="Output" EntitySet="Outputs" />
             <End Role="OutputInfor" EntitySet="OutputInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__IdRole__2F10007B" Association="Self.FK__Users__IdRole__2F10007B">
+          <AssociationSet Name="FK__OutputInf__IdPay__2D27B809" Association="Self.FK__OutputInf__IdPay__2D27B809">
+            <End Role="PayMentType" EntitySet="PayMentTypes" />
+            <End Role="OutputInfor" EntitySet="OutputInfors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__IdUserRol__300424B4" Association="Self.FK__Users__IdUserRol__300424B4">
             <End Role="UserRole" EntitySet="UserRoles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
@@ -627,42 +673,43 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CakeStoreModel1StoreContainer" CdmEntityContainer="CakeStoreEntities1">
+        <EntityContainerMapping StorageEntityContainer="CakeStoreFinalProjectModelStoreContainer" CdmEntityContainer="CakeStoreFinalProjectEntities">
           <EntitySetMapping Name="Cakes">
-            <EntityTypeMapping TypeName="CakeStoreModel1.Cake">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Cake">
               <MappingFragment StoreEntitySet="Cake">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="CakeType" ColumnName="CakeType" />
-                <ScalarProperty Name="IdUnit" ColumnName="IdUnit" />
+                <ScalarProperty Name="IdCakeType" ColumnName="IdCakeType" />
                 <ScalarProperty Name="IdSuplier" ColumnName="IdSuplier" />
                 <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CakeTypes">
-            <EntityTypeMapping TypeName="CakeStoreModel1.CakeType">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.CakeType">
               <MappingFragment StoreEntitySet="CakeType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="CakeStoreModel1.Customer">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MoreInfor" ColumnName="MoreInfor" />
                 <ScalarProperty Name="ContractDate" ColumnName="ContractDate" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Inputs">
-            <EntityTypeMapping TypeName="CakeStoreModel1.Input">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Input">
               <MappingFragment StoreEntitySet="Input">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
@@ -671,20 +718,21 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InputInfors">
-            <EntityTypeMapping TypeName="CakeStoreModel1.InputInfor">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.InputInfor">
               <MappingFragment StoreEntitySet="InputInfor">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdCake" ColumnName="IdCake" />
                 <ScalarProperty Name="IdInput" ColumnName="IdInput" />
+                <ScalarProperty Name="IdCake" ColumnName="IdCake" />
+                <ScalarProperty Name="IdSuplier" ColumnName="IdSuplier" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="InputPrice" ColumnName="InputPrice" />
-                <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Outputs">
-            <EntityTypeMapping TypeName="CakeStoreModel1.Output">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Output">
               <MappingFragment StoreEntitySet="Output">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
@@ -693,55 +741,59 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OutputInfors">
-            <EntityTypeMapping TypeName="CakeStoreModel1.OutputInfor">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.OutputInfor">
               <MappingFragment StoreEntitySet="OutputInfor">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdCake" ColumnName="IdCake" />
-                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
                 <ScalarProperty Name="IdOutput" ColumnName="IdOutput" />
+                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdPayment" ColumnName="IdPayment" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayMentTypes">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.PayMentType">
+              <MappingFragment StoreEntitySet="PayMentType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Supliers">
-            <EntityTypeMapping TypeName="CakeStoreModel1.Suplier">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Suplier">
               <MappingFragment StoreEntitySet="Suplier">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MoreInfor" ColumnName="MoreInfor" />
                 <ScalarProperty Name="ContractDate" ColumnName="ContractDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Units">
-            <EntityTypeMapping TypeName="CakeStoreModel1.Unit">
-              <MappingFragment StoreEntitySet="Unit">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="CakeStoreModel1.UserRole">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="CakeStoreModel1.User">
+            <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="PassWords" ColumnName="PassWords" />
-                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="IdUserRole" ColumnName="IdUserRole" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -16,14 +16,17 @@ namespace CakeStorManagement.Model
     {
         public int Id { get; set; }
         public string IdCake { get; set; }
-        public int IdCustomer { get; set; }
         public int IdOutput { get; set; }
-        public Nullable<int> Count { get; set; }
+        public int IdCustomer { get; set; }
+        public int Count { get; set; }
+        public double OutputPrice { get; set; }
         public string Status { get; set; }
-        public Nullable<double> OutputPrice { get; set; }
+        public int IdPayment { get; set; }
+        public bool isDelete { get; set; }
     
         public virtual Cake Cake { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Output Output { get; set; }
+        public virtual PayMentType PayMentType { get; set; }
     }
 }

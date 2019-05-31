@@ -15,12 +15,12 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
-        
+        FontFamily="{DynamicResource MaterialDesignFont}"       
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         xmlns:uc="clr-namespace:CakeStorManagement.MyUserControl"
+        
         Title="Phần mềm quản lý" Height="750" Width="1300"
         DataContext="{StaticResource MainVM}"
         Name="mainwindow">
@@ -112,10 +112,10 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid>
             <uc:ControlBarUC  Tag="{Binding Title, ElementName =mainwindow}"></uc:ControlBarUC>
         </Grid>
         <Grid Grid.Row="1">
@@ -204,7 +204,7 @@
                             </Grid>
                         </Button>
 
-                        <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding LogoutCommand}" CommandParameter="{Binding ElementName=statisticwindow}">
+                        <Button Margin="10" Background="#FF8522BD" BorderBrush="#FF8522BD" Command="{Binding LoadedWindowCommand}" CommandParameter="{Binding ElementName=mainwindow}">
                             <Grid Width="150">
                                 <materialDesign:PackIcon Kind="Logout" VerticalAlignment="Center"/>
                                 <TextBlock HorizontalAlignment="Center" Text="Đăng xuất" FontFamily="Champagne &amp; Limousines"/>

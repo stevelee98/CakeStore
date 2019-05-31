@@ -5,12 +5,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CakeStorManagement.ViewModel
 {
     public class SuplierViewModel : BaseViewModel
-    {
+    { 
 
         private ObservableCollection<Suplier> _List;
         public ObservableCollection<Suplier> List { get => _List; set { _List = value; OnPropertyChanged(); } }
@@ -28,7 +29,6 @@ namespace CakeStorManagement.ViewModel
                     Phone = SelectedItem.Phone;
                     Email = SelectedItem.Email;
                     ContractDate = SelectedItem.ContractDate;
-                    MoreInfor = SelectedItem.MoreInfor;
                     
                 }
             }
@@ -46,25 +46,36 @@ namespace CakeStorManagement.ViewModel
         private string _Email;
         public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
 
-        private string _MoreInfor;
-        public string MoreInfor { get => _MoreInfor; set { _MoreInfor = value; OnPropertyChanged(); } }
-
-        private DateTime? _ContractDate; // thêm  "?": cho phép dữ liệu null
-        public DateTime? ContractDate { get => _ContractDate; set { _ContractDate = value; OnPropertyChanged(); } }
+        private DateTime _ContractDate; // thêm  "?": cho phép dữ liệu null
+        public DateTime ContractDate { get => _ContractDate; set { _ContractDate = value; OnPropertyChanged(); } }
 
 
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         public SuplierViewModel()
-        {
-            List = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Supliers);
+        {           
+            List = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Supliers.Where(x => x.isDelete != true));
            
             AddCommand = new RelayCommand<object>((p) =>
             {
+                int err = 0;
+                foreach (var item in List)
+                {
+                    if (DisplayName == item.DisplayName)
+                    {
+                        err = 1;
+                    }
+                }
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
+                if (err == 1) 
+                {
+                    return false;
+                }
                 return true;
             }, p => {
-                var Suplier = new Suplier() { DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, MoreInfor = MoreInfor, ContractDate = ContractDate };
+                var Suplier = new Suplier() { DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, ContractDate = ContractDate };
                 DataProvider.Ins.DB.Supliers.Add(Suplier);
                 DataProvider.Ins.DB.SaveChanges();
                 List.Add(Suplier);
@@ -76,6 +87,7 @@ namespace CakeStorManagement.ViewModel
                     return false;
                 if (String.IsNullOrEmpty(DisplayName))
                     return false;
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
 
                 if (SelectedItem == null)
                     return false;
@@ -86,11 +98,9 @@ namespace CakeStorManagement.ViewModel
             }, p => {
                 var Suplier = DataProvider.Ins.DB.Supliers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 Suplier.DisplayName = DisplayName;
-                Suplier.DisplayName = DisplayName;
                 Suplier.Address = Address;
                 Suplier.Phone = Phone;
                 Suplier.Email = Email;
-                Suplier.MoreInfor = MoreInfor;
                 Suplier.ContractDate = ContractDate;
                 DataProvider.Ins.DB.SaveChanges();
                 //SelectedItem.DisplayName = DisplayName;
@@ -98,10 +108,40 @@ namespace CakeStorManagement.ViewModel
                 {
                     if (List[i].Id == SelectedItem.Id)
                     {
-                        List[i] = new Suplier() { Id = SelectedItem.Id, DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, MoreInfor = MoreInfor, ContractDate = ContractDate };
+                        List[i] = new Suplier() { Id = SelectedItem.Id, DisplayName = DisplayName, Address = Address, Phone = Phone, Email = Email, ContractDate = ContractDate };
                         break;
                     }
                 }
+            });
+
+            DeleteCommand = new RelayCommand<object>((p) =>
+            {
+                if (String.IsNullOrWhiteSpace(DisplayName))
+                    return false;
+                if (String.IsNullOrEmpty(DisplayName))
+                    return false;
+                if (MainViewModel.IdUserRole == 2) return false; // id =2: nhân viên => chỉ được quyền xem
+
+                if (SelectedItem == null)
+                    return false;
+                var displayList = DataProvider.Ins.DB.Supliers.Where(x => x.Id == SelectedItem.Id);
+                if (displayList != null && displayList.Count() != 0)
+                    return true;
+                return false;
+
+            }, (p) =>
+            {
+                MessageBox.Show("Bạn có chắn chắn xóa ????");
+                var Suplier = DataProvider.Ins.DB.Supliers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+                Suplier.DisplayName = DisplayName;
+                Suplier.Address = Address;
+                Suplier.Phone = Phone;
+                Suplier.Email = Email;
+                Suplier.ContractDate = ContractDate;
+                Suplier.isDelete = true;
+                DataProvider.Ins.DB.SaveChanges();
+
+                List = new ObservableCollection<Suplier>(DataProvider.Ins.DB.Supliers.Where(x => x.isDelete != true));
             });
         }
     }

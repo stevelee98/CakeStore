@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\C# - WPF\CakeStorManagement\CakeStorManagement\obj\Debug\
+E:\C# - WPF\CakeStore\CakeStorManagement\obj\Debug\
 CakeStorManagement
 none
 false
 DEBUG;TRACE
-E:\C# - WPF\CakeStorManagement\CakeStorManagement\App.xaml
-20722261160
-2459007165
-65-494345223
-23809955974
-AddInputWindow.xaml;AddOutputWindow.xaml;CakeWindow.xaml;CustomerWindow.xaml;InputCake.xaml;InputDetailWindow.xaml;InputWindow.xaml;LoginWindow.xaml;OutputCake.xaml;OutputDetailWindow.xaml;OutputWindow.xaml;ResourceXAML\MainResouce.xaml;MyUserControl\ControlBarUC.xaml;HistoryWindow.xaml;MainWindow.xaml;StatisticWindow.xaml;SuplierWindow.xaml;UnitWindow.xaml;UserWindow.xaml;ViewStatisticWindow.xaml;
+E:\C# - WPF\CakeStore\CakeStorManagement\App.xaml
+17-1888090374
+2-1556844510
+59-284918177
+231685847092
+CakeWindow.xaml;CustomerWindow.xaml;InputCake.xaml;InputDetailWindow.xaml;InputWindow.xaml;LoginWindow.xaml;OutputCake.xaml;OutputDetailWindow.xaml;OutputWindow.xaml;ResourceXAML\MainResouce.xaml;MyUserControl\ControlBarUC.xaml;HistoryWindow.xaml;MainWindow.xaml;StatisticWindow.xaml;SuplierWindow.xaml;UserWindow.xaml;ViewStatisticWindow.xaml;
 
-True
+False
 

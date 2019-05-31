@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3a8b244265f949d9a0b4b1756639d336" Name="Diagram1">
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.Cake" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.CakeType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.Customer" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.Input" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.InputInfor" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.Output" Width="1.5" PointX="6" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.OutputInfor" Width="1.5" PointX="8.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.PayMentType" Width="1.5" PointX="6" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.Suplier" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.UserRole" Width="1.5" PointX="1.5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeStoreFinalProjectModel.User" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__Cake__IdCakeType__25869641" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__Cake__IdSuplier__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__InputInfo__IdCak__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__OutputInf__IdCak__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__OutputInf__IdCus__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__Input__IdUser__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__InputInfo__IdInp__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__InputInfo__IdSup__276EDEB3" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__Output__IdUser__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__OutputInf__IdOut__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__OutputInf__IdPay__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeStoreFinalProjectModel.FK__Users__IdUserRol__300424B4" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

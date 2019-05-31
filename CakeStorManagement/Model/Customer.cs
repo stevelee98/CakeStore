@@ -25,8 +25,8 @@ namespace CakeStorManagement.Model
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public string MoreInfor { get; set; }
-        public Nullable<System.DateTime> ContractDate { get; set; }
+        public System.DateTime ContractDate { get; set; }
+        public bool isDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OutputInfor> OutputInfors { get; set; }

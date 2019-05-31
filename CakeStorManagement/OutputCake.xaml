@@ -61,40 +61,54 @@
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
                     <TextBox materialDesign:HintAssist.Hint="Số lượng" Margin="5 5 15 5" 
                              Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <ComboBox Margin="5 5 15 5" materialDesign:HintAssist.Hint="Giá xuất" IsEditable="True"                              
-                              ItemsSource="{Binding OutputPriceList}" SelectedItem="{Binding SelectedPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
-
+                    <TextBox materialDesign:HintAssist.Hint="Giá xuất" Margin="5 5 15 5" 
+                             Text="{Binding PriceOutput,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <ComboBox Margin="5 5 15 5" materialDesign:HintAssist.Hint="Khách hàng" IsEditable="True"
                               DisplayMemberPath="DisplayName"
                               ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
                     <TextBox materialDesign:HintAssist.Hint="Trạng thái" Margin="5 5 15 5" 
                              Text="{Binding Status,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBlock Width="110" VerticalAlignment="Center" FontSize="18"                             
+                    <TextBlock Width="110" VerticalAlignment="Center" FontSize="16"                             
                              Text="Số lượng tồn: "  />
-                    <TextBlock VerticalAlignment="Center"  Width="200" FontSize="20"
+                    <TextBlock VerticalAlignment="Center"  Width="150" FontSize="18"
                              Text="{Binding InventoryCake,UpdateSourceTrigger=PropertyChanged}"  />
+                    <TextBlock Width="110" VerticalAlignment="Center" FontSize="16"                             
+                             Text="Giá nhập: "  />
+                    <TextBlock VerticalAlignment="Center"  Width="150" FontSize="18"
+                             Text="{Binding PriceInput,UpdateSourceTrigger=PropertyChanged}"  />
                 </WrapPanel>
             </materialDesign:Card>
 
             <materialDesign:Card Grid.Row="2" Margin="5">
-                <WrapPanel>
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" Width="100"  Margin="5"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <WrapPanel Grid.Column="0">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" Width="100"  Margin="5"
                             Content="Thêm" Background="CornflowerBlue"
                             Command="{Binding AddCommand}" />
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" Width="100"  Margin="5"
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" Width="100"  Margin="5"
                             Background="BlueViolet"
                             Content="Sửa"
                             Command="{Binding EditCommand}" />
-                    <Button Style="{StaticResource MaterialDesignRaisedButton}" Width="100"  Margin="5"
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" Width="100"  Margin="5"
                             Content="Xóa" Background="OrangeRed"
                             Command="{Binding DeleteCommand}" />
-                    <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="100"  Margin="5"
+                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="100"  Margin="5"
                             Content="Xong"
-                            Command="{Binding FinishCommand}" 
+                            Command="{Binding FinishCommand}"
                             CommandParameter="{Binding ElementName=outputcakewindow}"/>
-                </WrapPanel>
+
+                    </WrapPanel>
+                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Width="100"  Margin="5"                         
+                            Content="Bỏ" Background="OrangeRed"
+                            Command="{Binding DestroyInputCommand}"                        
+                         CommandParameter="{Binding ElementName=outputcakewindow}"/>
+                </Grid>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="3" Margin="5" VerticalAlignment="Stretch">
                 <ScrollViewer VerticalScrollBarVisibility="Auto"    >
@@ -103,7 +117,7 @@
                             <GridView>
                                 <GridViewColumn Header="Tên hàng" DisplayMemberBinding="{Binding Cake.DisplayName}"></GridViewColumn>
                                 <GridViewColumn Header="Số lượng" DisplayMemberBinding="{Binding Count}"></GridViewColumn>
-                                <GridViewColumn Header="Giá xuất" DisplayMemberBinding="{Binding OutputPrice}"></GridViewColumn>
+                                <GridViewColumn Header="Giá xuất" DisplayMemberBinding="{Binding PriceOutput}"></GridViewColumn>
                                 <GridViewColumn Header="Khách hàng" DisplayMemberBinding="{Binding Customer.DisplayName}"></GridViewColumn>
                                 <GridViewColumn Header="Trạng thái"  DisplayMemberBinding="{Binding Status}"></GridViewColumn>
                             </GridView>

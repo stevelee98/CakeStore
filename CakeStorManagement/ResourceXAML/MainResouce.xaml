@@ -4,20 +4,17 @@
                     xmlns:viewmodel ="clr-namespace:CakeStorManagement.ViewModel">
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+    <viewmodel:CakeViewModel x:Key="CakeVM"></viewmodel:CakeViewModel>
     <viewmodel:SuplierViewModel x:Key="SuplierVM"></viewmodel:SuplierViewModel>
     <viewmodel:CustomerViewModel x:Key="CustomerVM"></viewmodel:CustomerViewModel>
-    <viewmodel:UnitViewModel x:Key="UnitVM"></viewmodel:UnitViewModel>
-    <viewmodel:CakeViewModel x:Key="CakeVM"></viewmodel:CakeViewModel>
     <viewmodel:UserViewModel x:Key="UserVM"></viewmodel:UserViewModel>
-    <viewmodel:InputViewModel x:Key="HistoryInputVM"></viewmodel:InputViewModel>
-    <viewmodel:InputDetailViewModel x:Key="InputDetailVM"></viewmodel:InputDetailViewModel>
-    <viewmodel:OutputViewModel x:Key="HistoryOutputVM"></viewmodel:OutputViewModel>
-    <viewmodel:OutputDetailViewModel x:Key="OutputDetailVM"></viewmodel:OutputDetailViewModel>
-    <viewmodel:HistoryViewModel x:Key="HistoryVM"></viewmodel:HistoryViewModel>
     <viewmodel:InputCakeViewModel x:Key="InputCakeVM"></viewmodel:InputCakeViewModel>
-    <viewmodel:AddInputViewModel x:Key="AddInputVM"></viewmodel:AddInputViewModel>
-    <viewmodel:AddOutputViewModel x:Key="AddOutputVM"></viewmodel:AddOutputViewModel>
     <viewmodel:OutputCakeViewModel x:Key="OutputCakeVM"></viewmodel:OutputCakeViewModel>
+    <viewmodel:InputViewModel x:Key="HistoryInputVM"></viewmodel:InputViewModel>
+    <viewmodel:OutputViewModel x:Key="HistoryOutputVM"></viewmodel:OutputViewModel>
+    <viewmodel:HistoryViewModel x:Key="HistoryVM"></viewmodel:HistoryViewModel>
+    <viewmodel:InputDetailViewModel x:Key="InputDetailVM"></viewmodel:InputDetailViewModel>
+    <viewmodel:OutputDetailViewModel x:Key="OutputDetailVM"></viewmodel:OutputDetailViewModel>
     <viewmodel:StatictisViewModel x:Key="StatisticVM"></viewmodel:StatictisViewModel>
     <viewmodel:ViewStatisticViewModel x:Key="ViewStatisticVM"></viewmodel:ViewStatisticViewModel>
 </ResourceDictionary>

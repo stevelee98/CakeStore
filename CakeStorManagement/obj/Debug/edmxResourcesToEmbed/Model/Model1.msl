@@ -1,33 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="CuaHangBanhModelStoreContainer" CdmEntityContainer="CuaHangBanhEntities">
+  <EntityContainerMapping StorageEntityContainer="CakeStoreFinalProjectModelStoreContainer" CdmEntityContainer="CakeStoreFinalProjectEntities">
     <EntitySetMapping Name="Cakes">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.Cake">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Cake">
         <MappingFragment StoreEntitySet="Cake">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-          <ScalarProperty Name="CakeType" ColumnName="CakeType" />
-          <ScalarProperty Name="IdUnit" ColumnName="IdUnit" />
+          <ScalarProperty Name="IdCakeType" ColumnName="IdCakeType" />
           <ScalarProperty Name="IdSuplier" ColumnName="IdSuplier" />
           <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CakeTypes">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.CakeType">
+        <MappingFragment StoreEntitySet="CakeType">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Customers">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.Customer">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Customer">
         <MappingFragment StoreEntitySet="Customer">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="MoreInfor" ColumnName="MoreInfor" />
           <ScalarProperty Name="ContractDate" ColumnName="ContractDate" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Inputs">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.Input">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Input">
         <MappingFragment StoreEntitySet="Input">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="IdUser" ColumnName="IdUser" />
@@ -36,21 +45,21 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="InputInfors">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.InputInfor">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.InputInfor">
         <MappingFragment StoreEntitySet="InputInfor">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-          <ScalarProperty Name="IdCake" ColumnName="IdCake" />
           <ScalarProperty Name="IdInput" ColumnName="IdInput" />
+          <ScalarProperty Name="IdCake" ColumnName="IdCake" />
+          <ScalarProperty Name="IdSuplier" ColumnName="IdSuplier" />
           <ScalarProperty Name="Count" ColumnName="Count" />
           <ScalarProperty Name="InputPrice" ColumnName="InputPrice" />
-          <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
           <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Outputs">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.Output">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Output">
         <MappingFragment StoreEntitySet="Output">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="IdUser" ColumnName="IdUser" />
@@ -59,55 +68,59 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OutputInfors">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.OutputInfor">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.OutputInfor">
         <MappingFragment StoreEntitySet="OutputInfor">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="IdCake" ColumnName="IdCake" />
-          <ScalarProperty Name="IdInputInfor" ColumnName="IdInputInfor" />
-          <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
           <ScalarProperty Name="IdOutput" ColumnName="IdOutput" />
+          <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
           <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="OutputPrice" ColumnName="OutputPrice" />
           <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IdPayment" ColumnName="IdPayment" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PayMentTypes">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.PayMentType">
+        <MappingFragment StoreEntitySet="PayMentType">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Supliers">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.Suplier">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.Suplier">
         <MappingFragment StoreEntitySet="Suplier">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="MoreInfor" ColumnName="MoreInfor" />
           <ScalarProperty Name="ContractDate" ColumnName="ContractDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Units">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.Unit">
-        <MappingFragment StoreEntitySet="Unit">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserRoles">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.UserRole">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.UserRole">
         <MappingFragment StoreEntitySet="UserRole">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="CuaHangBanhModel.User">
+      <EntityTypeMapping TypeName="CakeStoreFinalProjectModel.User">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="PassWords" ColumnName="PassWords" />
-          <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+          <ScalarProperty Name="IdUserRole" ColumnName="IdUserRole" />
+          <ScalarProperty Name="isDelete" ColumnName="isDelete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

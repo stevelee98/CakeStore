@@ -11,13 +11,15 @@ namespace CakeStorManagement.ViewModel
     {
         public ICommand StatisticCommand { get; set; }
 
-        private DateTime? _DateStart;
-        public DateTime? DateStart { get => _DateStart; set { _DateStart = value; OnPropertyChanged(); } }
-        private DateTime? _DateEnd;
-        public DateTime? DateEnd { get => _DateEnd; set { _DateEnd = value; OnPropertyChanged(); } }
+        private DateTime _DateStart;
+        public DateTime DateStart { get => _DateStart; set { _DateStart = value; OnPropertyChanged(); } }
+        private DateTime _DateEnd;
+        public DateTime DateEnd { get => _DateEnd; set { _DateEnd = value; OnPropertyChanged(); } }
 
         public ViewStatisticViewModel()
         {
+            DateStart = DateTime.Now;
+            DateEnd = DateTime.Now;
             StatisticCommand = new RelayCommand<object>((p) =>
             {
                 if (DateStart == null || DateEnd == null)
