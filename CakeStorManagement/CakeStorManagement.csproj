@@ -191,7 +191,6 @@
     <Compile Include="ViewModel\SuplierViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\ViewStatisticViewModel.cs" />
-    <Compile Include="ViewModel\WindowClosingBehavior.cs" />
     <Compile Include="ViewStatisticWindow.xaml.cs">
       <DependentUpon>ViewStatisticWindow.xaml</DependentUpon>
     </Compile>

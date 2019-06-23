@@ -178,7 +178,7 @@ namespace CakeStorManagement.ViewModel
             CakeCommand = new RelayCommand<object>((p) => { return true; }, p => { CakeWindow wd = new CakeWindow(); wd.ShowDialog(); });
             UserCommand = new RelayCommand<object>((p) => { if (UserRole.DisplayName != "Admin") { return false; } return true; }, p => { UserWindow wd = new UserWindow(); wd.ShowDialog(); });
             InputCommand = new RelayCommand<object>((p) => { return true; }, p => { InputCakeViewModel viewModel = new InputCakeViewModel(); InputCake wd = new InputCake(); wd.DataContext = viewModel; wd.ShowDialog();}); 
-            OutputCommand = new RelayCommand<object>((p) => { return true; }, p => { OutputCakeViewModel viewModel = new OutputCakeViewModel(); OutputCake wd = new OutputCake();wd.DataContext = viewModel; wd.ShowDialog(); });
+            OutputCommand = new RelayCommand<object>((p) => { return true; }, p => { OutputCakeViewModel outputViewModel = new OutputCakeViewModel(); OutputCake wd = new OutputCake();wd.DataContext = outputViewModel; wd.ShowDialog(); });
             HistoryCommand = new RelayCommand<object>((p) => { return true; }, p => { HistoryWindow wd = new HistoryWindow(); wd.ShowDialog(); });
             ViewStatisticCommand = new RelayCommand<object>((p) => {return true; }, p => { ViewStatisticViewModel viewModel = new ViewStatisticViewModel(); ViewStatisticWindow wd = new ViewStatisticWindow(); wd.DataContext = viewModel; wd.ShowDialog();  });
             LogoutCommand = new RelayCommand<Window>((p) => {return true; }, p => { LoginWindow wd = new LoginWindow(); wd.Show(); });

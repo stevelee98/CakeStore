@@ -40,8 +40,8 @@ namespace CakeStorManagement.ViewModel
         private double _PriceInput;
         public double PriceInput { get => _PriceInput; set { _PriceInput = value; OnPropertyChanged(); } }
 
-        private double _PriceOutput;
-        public double PriceOutput { get => _PriceOutput; set { _PriceOutput = value; OnPropertyChanged(); } }
+        private double _OutputPrice;
+        public double OutputPrice { get => _OutputPrice; set { _OutputPrice = value; OnPropertyChanged(); } }
 
         private string _Status;
         public string Status { get => _Status; set { _Status = value; OnPropertyChanged(); } }
@@ -60,6 +60,7 @@ namespace CakeStorManagement.ViewModel
                 _SelectedCake = value; OnPropertyChanged();
                 if (SelectedCake != null)
                 {
+
                     var inputInfor = DataProvider.Ins.DB.InputInfors.Where(x => x.IdCake == SelectedCake.Id).Select(x => x.InputPrice);
 
                     double priceMax = 0;
@@ -107,7 +108,7 @@ namespace CakeStorManagement.ViewModel
                     SelectedCake = SelectedItem.Cake;
                     SelectedCustomer = SelectedItem.Customer;
                     Count = SelectedItem.Count;
-                    PriceOutput = PriceOutput;
+                    OutputPrice = SelectedItem.OutputPrice;
                     Status = SelectedItem.Status;
                 }
             }
@@ -135,7 +136,7 @@ namespace CakeStorManagement.ViewModel
           
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (_SelectedCake == null || PriceOutput <= 0 || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
+                if (_SelectedCake == null || OutputPrice <= 0 || OutputPrice > PriceInput || Count > InventoryCake || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
                     return false;
 
                 return true;
@@ -149,7 +150,7 @@ namespace CakeStorManagement.ViewModel
                     IdCake = SelectedCake.Id,
                     IdOutput = IdOutput,
                     Customer = SelectedCustomer,
-                    OutputPrice = PriceOutput,
+                    OutputPrice = OutputPrice,
                     Status = Status,
                     Count = Count,
                     IdPayment = 1,
@@ -176,7 +177,7 @@ namespace CakeStorManagement.ViewModel
             });
             EditCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedItem == null || SelectedCake == null || PriceOutput <= 0 || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
+                if (SelectedItem == null || SelectedCake == null || OutputPrice <= 0 || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
                     return false;
 
                 return true;
@@ -192,7 +193,7 @@ namespace CakeStorManagement.ViewModel
                             Cake = SelectedCake,
                             IdCake = SelectedCake.Id,
                             IdOutput = IdOutput,
-                            OutputPrice = PriceOutput,
+                            OutputPrice = OutputPrice,
                             Customer = SelectedCustomer,
                             Status = Status,
                             Count = Count,
