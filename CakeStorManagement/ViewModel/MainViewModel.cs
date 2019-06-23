@@ -181,7 +181,7 @@ namespace CakeStorManagement.ViewModel
             OutputCommand = new RelayCommand<object>((p) => { return true; }, p => { OutputCakeViewModel outputViewModel = new OutputCakeViewModel(); OutputCake wd = new OutputCake();wd.DataContext = outputViewModel; wd.ShowDialog(); });
             HistoryCommand = new RelayCommand<object>((p) => { return true; }, p => { HistoryWindow wd = new HistoryWindow(); wd.ShowDialog(); });
             ViewStatisticCommand = new RelayCommand<object>((p) => {return true; }, p => { ViewStatisticViewModel viewModel = new ViewStatisticViewModel(); ViewStatisticWindow wd = new ViewStatisticWindow(); wd.DataContext = viewModel; wd.ShowDialog();  });
-            LogoutCommand = new RelayCommand<Window>((p) => {return true; }, p => { LoginWindow wd = new LoginWindow(); wd.Show(); });
+            LogoutCommand = new RelayCommand<Window>((p) => {return true; }, p => { p.Close(); LoginWindow wd = new LoginWindow(); wd.Show(); });
         }
 
         public double CalculateRevenueInDay(DateTime date)
