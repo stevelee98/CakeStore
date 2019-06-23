@@ -136,7 +136,7 @@ namespace CakeStorManagement.ViewModel
           
             AddCommand = new RelayCommand<object>((p) =>
             {
-                if (_SelectedCake == null || OutputPrice <= 0 || OutputPrice > PriceInput || Count > InventoryCake || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
+                if (_SelectedCake == null || OutputPrice <= 0 || OutputPrice < PriceInput || Count > InventoryCake || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
                     return false;
 
                 return true;
@@ -177,7 +177,7 @@ namespace CakeStorManagement.ViewModel
             });
             EditCommand = new RelayCommand<object>((p) =>
             {
-                if (SelectedItem == null || SelectedCake == null || OutputPrice <= 0 || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
+                if (SelectedItem == null || SelectedCake == null || OutputPrice <= 0 || OutputPrice < PriceInput || Count > InventoryCake || String.IsNullOrWhiteSpace(Status) || String.IsNullOrEmpty(Status))
                     return false;
 
                 return true;
